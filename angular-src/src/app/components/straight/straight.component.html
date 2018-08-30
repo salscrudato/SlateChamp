@@ -1,0 +1,155 @@
+<div class="text-muted topNav" *ngIf="actions.length < 1" align="center"><p>Loading Lines</p></div>
+<div class="loader" *ngIf="actions.length < 1"></div>
+
+<div class="container pt-5 bg-dark" *ngIf="actions.length > 0">
+  <div class="row" align="center" *ngIf="sport==0 || sport==3 || sport==4">
+    <div *ngFor="let action of actions" class="card col-sm-4 mt-3 pl-0 pr-0">
+
+      <div class="row pl-0 pr-0">
+        <div class="col w-50" align="left">
+          <p class="m-0 pl-3">{{action.matchDate}}</p>
+        </div>
+        <div class="col w-50" align="right">
+          <p class="m-0 pr-3">{{action.matchTime}}</p>
+        </div>
+      </div>
+
+      <div class ="row w-100" *ngIf="action.sport==0 || action.sport==4 || action.sport==3">
+        <div class ="col p-0 float-left">
+          <img class="w-75 h-100" src="{{action.awayImagePath}}" alt="{{action.awayTeam}}">
+        </div>
+        <h2 class="mt-4">@</h2>
+        <div class ="col p-0 float-right">
+          <img class="w-75 h-100" src="{{action.homeImagePath}}" alt="assets/images/ncaaf.jpg">
+        </div>
+      </div>
+
+      <div class="card-header border-top pl-3 pr-3">
+
+        <div align="left">
+          <div class="row pl-3">{{action.awayTeam}}</div>
+          <div class="row border-bottom pb-1 pt-1">
+            <div class="col">
+              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.awayTeamML!=0 && action.awayTeamML>-400 && action.awayTeamML<400" (click)="placeBet(action,'awayTeamML')">{{action.awayTeamML}}</a>
+            </div>
+            <div class="col" align="center">
+              <a class="btn btn-primary btn-block btn-sm text-light" *ngIf="action.awayTeamRL!=0" (click)="placeBet(action,'awayTeamRL')">{{action.awayTeamRL}} {{action.awayTeamRLOdds}}</a>
+            </div>
+            <div class="col">
+              <a class="btn btn-primary btn-block btn-sm text-light float-right" *ngIf="action.totalNumber!=0" (click)="placeBet(action,'under')">u{{action.totalNumber}}  {{action.underLine}}</a>
+            </div>
+          </div>
+        </div>
+
+        <div align="left">
+          <div class="row pl-3">{{action.homeTeam}}</div>
+          <div class="row pb-1 pt-1">
+            <div class="col">
+              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.homeTeamML!=0 && action.homeTeamML>-400 && action.homeTeamML<400" (click)="placeBet(action,'homeTeamML')">{{action.homeTeamML}}</a>
+            </div>
+            <div class="col" align="center">
+              <a class="btn btn-primary btn-block btn-sm text-light" *ngIf="action.homeTeamRL!=0" (click)="placeBet(action,'homeTeamRL')">{{action.homeTeamRL}} {{action.homeTeamRLOdds}}</a>
+            </div>
+            <div class="col">
+              <a class="btn btn-primary btn-block btn-sm text-light float-right" *ngIf="action.totalNumber!=0" (click)="placeBet(action,'over')">o{{action.totalNumber}}  {{action.overLine}}</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3 ml-0 mr-0" *ngIf="sport==21">
+    <div class="col bg-dark block text-light p-0 m-0 h-100" *ngFor="let action of actions">
+      <div class="col" align="center">
+        <h5>{{action.eventName}} - {{action.matchDate}} {{action.matchTime}}</h5>
+      </div>
+
+    <div>
+      <table class="table table-dark table-hover w-100">
+        <thead>
+          <tr>
+            <th style="width:50%">Participant</th>
+            <th style="width:50%">Odds to Win</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="placeGolf(action, part)" *ngFor="let part of action.participant">
+            <td>{{part.name}}</td>
+            <td>{{part.odds}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+
+
+<div class="row" align="center" *ngIf="sport==11">
+  <div *ngFor="let action of actions" class="card col-sm-4 mt-3 pl-0 pr-0">
+
+    <div class="row pl-0 pr-0">
+      <div class="col w-50" align="left">
+        <p class="m-0 pl-3">{{action.matchDate}}</p>
+      </div>
+      <div class="col w-50" align="right">
+        <p class="m-0 pr-3">{{action.matchTime}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="row justify-content-center mt-0 pt-0">
+          <p class="font-weight-bold mb-0 pb-0">{{action.homeTeam}} V {{action.awayTeam}}</p>
+        </div>
+        <div class="row justify-content-center mb-0 pb-0 text-muted font-small">
+          {{action.details}}
+        </div>
+      </div>
+    </div>
+
+    <div class="card-header">
+
+      <div class="row border-bottom">
+        <div class="col w-50 border-right" align="center">
+          {{action.awayTeam}}
+        </div>
+        <div class="col w-50" align="center">
+          {{action.homeTeam}}
+        </div>
+      </div>
+
+      <div class="row border-bottom mb-1 pb-1 pt-1" *ngIf="action.awayTeamML != null || action.homeTeamML != null">
+        <div class="col w-50 border-right">
+          <a class="btn btn-block btn-primary btn-sm text-light" (click)="placeBet(action, 'awayTeamML')" *ngIf="action.awayTeamML != null">
+            {{action.awayTeamML}}
+          </a>
+        </div>
+        <div class="col w-50">
+          <a class="btn btn-block btn-primary btn-sm text-light" (click)="placeBet(action, 'homeTeamML')" *ngIf="action.homeTeamML != null">
+            {{action.homeTeamML}}
+          </a>
+        </div>
+      </div>
+
+      <div>
+      <div class="row border-bottom mb-1 pb-1 pt-1" *ngIf="action.totalNumber != 0 || action.totalNumber !=0">
+        <div class="col w-50 border-right">
+          <a class="btn btn-block btn-primary btn-sm text-light" (click)="placeBet(action, 'overUFC')" *ngIf="action.totalNumber != 0">
+            o{{action.totalNumber}}  {{action.overLine}}
+          </a>
+        </div>
+        <div class="col w-50">
+          <a class="btn btn-block btn-primary btn-sm text-light" (click)="placeBet(action, 'underUFC')" *ngIf="action.totalNumber != 0">
+            u{{action.totalNumber}}  {{action.underLine}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+</div>

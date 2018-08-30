@@ -1,0 +1,49 @@
+.row{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.card-pricing.popular {
+    z-index: 1;
+    border: 3px solid #007bff;
+}
+.card-pricing .list-unstyled li {
+    padding: .5rem 0;
+    color: #6c757d;
+}
+
+.font-small{
+  font-size: 80%;
+}
+
+.btn {
+  font-size: 75%;
+}
+
+td {
+  font-size: 60%;
+}
+
+th {
+  font-size: 80%;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.topNav{
+  margin-top:5rem;
+}

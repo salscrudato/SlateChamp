@@ -1,0 +1,97 @@
+<div class="container mt-5 pt-4 pl-0 pr-0">
+  <div *ngIf="user">
+
+    <div>
+      <div class="row border-bottom">
+        <div class="col" align="center">
+          <h3>{{user.name.toUpperCase()}} Dashboard</h3>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col border-bottom" align="center" *ngIf="user.league.length>0">
+          <p>Current League:  {{user.league[0].name}}</p>
+        </div>
+        <div class="col border-bottom" align="center" *ngIf="user.league.length < 1">
+          <p>Current League:  Not Entered</p>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col border-bottom" align="center">
+          <p>Point Balance:  {{user.currentBalance}}</p>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col border-bottom" align="center">
+          <p>Available Points:  {{user.credit + user.currentBalance - amountPending}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col bg-dark block text-light p-0 m-0 h-100">
+      <div class="row pt-2 border-bottom" (click)="showHidePending()">
+        <div class="col" align="center">
+          <h5 *ngIf="showPending==false">Show Pendings ({{amountPending}} Points)</h5>
+          <h5 *ngIf="showPending==true">Hide Pendings ({{amountPending}} Points)</h5>
+        </div>
+      </div>
+      <div *ngIf="showPending==true">
+        <table class="table table-dark table-hover w-100">
+          <thead>
+            <tr>
+              <th style="width:15%">Date</th>
+              <th>Description</th>
+              <th style="width:5%">Risk</th>
+              <th style="width:5%">To Win</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bet of pendingBets">
+              <td>{{bet.gameDate}} {{bet.gameTime}}</td>
+              <td>{{bet.description}}</td>
+              <td>{{bet.betAmount}}</td>
+              <td>{{bet.winAmount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row m-0 p-0">
+      <div class="col bg-dark block text-light p-0 m-0">
+        <div class="row pt-2 border-bottom" (click)="showHideClosed()">
+          <div class="col" align="center">
+            <h5 *ngIf="showClosed==false">Show Bet History</h5>
+            <h5 *ngIf="showClosed==true">Hide Bet History</h5>
+          </div>
+        </div>
+        <div *ngIf="showClosed==true">
+          <table class="table table-dark table-hover w-100">
+            <thead>
+              <tr>
+                <th style="width:15%">Date</th>
+                <th>Description</th>
+                <th style="width:5%">Result</th>
+                <th style="width:5%">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bet of closedBets">
+                <td>{{bet.gameDate}} {{bet.gameTime}}</td>
+                <td>{{bet.description}}</td>
+                <td>{{bet.status}}</td>
+                <td *ngIf="bet.status=='win'">{{bet.winAmount}}</td>
+                <td *ngIf="bet.status=='loss'">-{{bet.betAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="text-muted topNav" *ngIf="!user" align="center"><p>Loading Profile, if it takes more than 10 seconds try logging in again</p></div>
+  <div class="loader" *ngIf="!user"></div>
+</div>

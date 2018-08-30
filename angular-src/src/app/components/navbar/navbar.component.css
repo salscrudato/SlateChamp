@@ -1,0 +1,14 @@
+.nav-link{ cursor: pointer; }
+
+.masthead {
+  font-size: 1rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.1rem;
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.bg-dark {
+  background-color: #A9A9A9;
+}

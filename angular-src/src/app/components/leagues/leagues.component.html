@@ -1,0 +1,23 @@
+<div class="container mt-3 pt-5">
+
+  <div class="row text-muted">
+    <div class="col" align="center">
+      <h4>Join a League!</h4>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="card col-sm-4 pl-0 pr-0">
+      <img class="card-img-top" src="/assets/images/ncaaf.jpg" alt="College Football">
+      <div class="card-header">
+        <div class="row">
+          <div class="col mb-1" align="center" *ngFor="let league of cfbLeagues">
+            <a class="btn btn-secondary btn-block text-light fontSmall" (click)="joinLeague(league)">${{league.buyin}} {{league.name}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.inside {
+    display: inline-block;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+.smallFont {
+  font-size: 65%;
+}

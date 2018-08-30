@@ -1,0 +1,42 @@
+<div class="container pt-5">
+
+  <div class = "col" align = "center">
+    <h2 class="page-header pt-2">Place Bet - Bet Slip</h2>
+    <p>{{betType}} BET</p>
+    <form (submit)="clickPlaceBet()">
+
+      <ul class="list-group mb-2">
+        <div *ngIf="betType != 'PROP' && betType != 'FUTURE'">
+        <li class="list-group-item" *ngFor="let bet of bet">{{bet.betDetails}}</li>
+        </div>
+        <div *ngIf="betType == 'PROP' || betType == 'FUTURE'">
+        <li class="list-group-item">{{bet.betDetails}}  {{bet.odds}}</li>
+        </div>
+      </ul>
+
+      <div class="row p-0 m-0">
+        <div class="col w-50" align="left">
+          <label for="amount">Bet Amount:</label>
+          <input autocomplete="off" type="number" style="width:150px" [(ngModel)]="betAmount" name="betAmount" class="form-control mr-2" id="amount">
+        </div>
+        <div class="col w-50" *ngIf="betAmount>0">
+          <label for="winamount">Win Amount:</label>
+          <h3 class="m-0" *ngIf="odds>0">{{round(betAmount * odds/100)}}</h3>
+          <h3 class="m-0" *ngIf="odds<0">{{round(betAmount / (odds * -1) * 100)}}</h3>
+        </div>
+      </div>
+      <div class="row mt-2 ml-0 mr-0" *ngIf="clickedSubmit==false">
+        <div class="col w-50" align="left">
+          <a class="btn btn-block btn-warning" (click)="cancelBet()">Cancel</a>
+        </div>
+        <div class="col w-50" align="right">
+          <input type="submit" class="btn btn-primary btn-block" value="Place Bet">
+        </div>
+      </div>
+      <div class="mt-2" *ngIf="clickedSubmit==true">
+        <div class="loader"></div>
+      </div>
+
+    </form>
+  </div>
+</div>

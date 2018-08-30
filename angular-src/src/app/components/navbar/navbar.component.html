@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="masthead" href="#">Slatechamp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nb" aria-controls="nb" aria-expanded="false">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="nb">
+    <ul class="navbar-nav mr-auto">
+      <li><a class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('menu')">Bet Menu</a></li>
+      <li><a class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('leagues')">Join a League</a></li>
+      <li><a class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('liveMenu')">Live Bet Menu</a></li>
+      <li><a class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('slatechamp')">How to Play</a></li>
+    </ul>
+    <ul class="navbar-nav mr-right">
+      <li><a *ngIf="authService.loggedIn()" class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('profile')">Profile</a></li>
+      <li><a *ngIf="authService.loggedInAdmin()" class="nav-link" data-toggle="collapse" data-target="#nb" (click)="route('admin')">Admin</a></li>
+      <li><a *ngIf="authService.loggedIn()" class="nav-link" data-toggle="collapse" data-target="#nb" (click)="onLogoutClick()">Logout</a></li>
+    </ul>
+  </div>
+</nav>

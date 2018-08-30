@@ -1,0 +1,48 @@
+<div class="container pt-5 mb-5 bg-dark">
+<div class="row" align="center">
+  <div *ngFor="let odd of odds" class="card col-sm-4 mt-3 pl-0 pr-0">
+    <div class="row pl-0 pr-0 ml-0 mr-0">
+      <div class="col" align="left">
+        <p class="m-0 pl-3">{{odd.matchDate}}</p>
+      </div>
+      <div class="col" align="right">
+        <p class="m-0 pr-3">{{odd.matchTime}}</p>
+      </div>
+    </div>
+    <div class ="row ml-0 mr-0">
+      <div class ="col p-0 float-left">
+        <img class="w-75 h-100" src="{{odd.awayImagePath}}" alt="Card image cap">
+      </div>
+      <h2 class="mt-4">@</h2>
+      <div class ="col p-0 float-right">
+        <img class="w-75 h-100" src="{{odd.homeImagePath}}" alt="Card image cap">
+      </div>
+    </div>
+    <div class="card-header pl-1 pr-1 border-top">
+      <div align="left">
+        <div class="row pl-3">{{odd.awayTeam}}</div>
+        <div class="row border-bottom pb-1 pt-1">
+          <div class="col" align="center">
+            <label class="btn btn-primary btn-sm btn-block"><input class="mr-2" type="checkbox" (click)="teaserCheckboxClick($event, odd, 'awayTeamRLTeaser')">{{odd.awayTeamRL}}</label>
+          </div>
+          <div class="col">
+            <label class="btn btn-primary btn-sm btn-block float-right"><input class="mr-2" type="checkbox" (click)="teaserCheckboxClick($event, odd, 'overTeaser')">Over {{odd.totalNumberTeaserOver}}</label>
+          </div>
+        </div>
+      </div>
+      <div align="left">
+        <div class="row pl-3">{{odd.homeTeam}}</div>
+        <div class="row pb-1 pt-1">
+          <div class="col" align="center">
+            <label class="btn btn-primary btn-sm btn-block"><input class="mr-2" type="checkbox" (click)="teaserCheckboxClick($event, odd, 'homeTeamRLTeaser')">{{odd.homeTeamRL}}</label>
+          </div>
+          <div class="col">
+            <label class="btn btn-primary btn-sm btn-block float-right"><input class="mr-2" type="checkbox" (click)="teaserCheckboxClick($event, odd, 'underTeaser')">Under {{odd.totalNumberTeaserUnder}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="btn btn-success btn-lg inside mb-2" (click)="placeBet()">Continue</div>

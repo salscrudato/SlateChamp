@@ -1,0 +1,42 @@
+<div class="row mt-5 ml-0 mr-0">
+  <div class="col bg-dark block text-light p-0 m-0 h-100">
+
+    <h5 class="mt-2" align="center"> Futures </h5>
+    <div>
+      <table class="table table-dark table-hover w-100">
+        <thead>
+          <tr>
+            <th style="width:80%">Description</th>
+            <th style="width:20%">Odds</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let future of futureArr" (click)="placeBet(future)">
+            <td>{{future.details}}</td>
+            <td>{{future.odds}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h5 class="mt-2" align="center"> Props </h5>
+    <div>
+      <table class="table table-dark table-hover w-100">
+        <thead>
+          <tr>
+            <th style="width:80%">Description</th>
+            <th style="width:20%">Odds</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prop of propArr" (click)="placeBet(prop)">
+            <td>{{prop.details}}</td>
+            <td>{{prop.odds}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>
