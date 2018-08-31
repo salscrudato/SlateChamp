@@ -199,7 +199,7 @@ var LeagueService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         //return this.http.get('http://localhost:8080/league/getAll', {headers: headers})
-        return this.http.post('league/getAll', { headers: headers })
+        return this.http.get('league/getAll', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     LeagueService.prototype.addParticipant = function (leagueId, user) {
@@ -1808,6 +1808,8 @@ var MenuComponent = (function () {
         this.oddsService.getOdds().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
                 var tmpGameTime = new Date(data[i].epoch);
+                console.log(_this.curTime);
+                console.log(tmpGameTime);
                 _this.actions.push(data[i]);
                 _this.actions = _this.sortEventOdds(_this.actions);
             }

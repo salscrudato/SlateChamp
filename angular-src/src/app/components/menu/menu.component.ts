@@ -88,6 +88,8 @@ export class MenuComponent implements OnInit {
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
         var tmpGameTime = new Date(data[i].epoch);
+        console.log(this.curTime);
+        console.log(tmpGameTime);
         this.actions.push(data[i]);
         this.actions = this.sortEventOdds(this.actions);
       }
