@@ -372,7 +372,7 @@ class Action {
         return '/assets/images/maryland-terps-logo.png';
         break;
         case 'Michigan':
-        return '/assets/images/michigan wolverines.png';
+        return '/assets/images/michigan.png';
         break;
         case 'Michigan State':
         return '/assets/images/michigan-state-university-logo.png';
@@ -480,7 +480,7 @@ class Action {
         return '/assets/images/BYU.jpg';
         break;
         case 'Liberty':
-        return '/assets/images/liberty flames.jpg';
+        return '/assets/images/liberty.png';
         break;
         case 'New Mexico St':
         return '/assets/images/New Mexico State.jpeg';
@@ -561,7 +561,7 @@ class Action {
         return '/assets/images/utah state.png';
         break;
         case 'Wyoming':
-        return '/assets/images/Wyoming.png';
+        return '/assets/images/wyoming.jpg';
         break;
         case 'Arizona':
         return '/assets/images/Arizona.png';
@@ -588,7 +588,7 @@ class Action {
         return '/assets/images/ucla-bruins-1-logo.png';
         break;
         case 'USC':
-        return '/assets/images/USC.png';
+        return '/assets/images/USC.jpg';
         break;
         case 'Utah':
         return '/assets/images/Utah utes.png';
@@ -666,7 +666,7 @@ class Action {
         return '/assets/images/texas state.jpg';
         break;
         case 'Troy':
-        return '/assets/images/troy trojans.jpg';
+        return '/assets/images/ncaaf.jpg';
         break;
         case 'Louisiana Monroe':
         return '/assets/images/ulm war hawks.png';

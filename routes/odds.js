@@ -14,7 +14,7 @@ var bet365Calls = 0;
 
 let cache = apicache.middleware;
 
-router.get('/all', cache('2 minutes'), function(req, res, next){
+router.get('/all', cache('20 minutes'), function(req, res, next){
   //router.get('/all', function(req, res, next){
   var headers = {
     'x-api-key':'c3eeb8e5-339c-4c38-9cf5-9aa6255969e5'
