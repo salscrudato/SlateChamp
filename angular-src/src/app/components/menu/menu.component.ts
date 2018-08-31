@@ -3,6 +3,7 @@ import {DataService} from '../../services/data.service';
 import {OddsService} from '../../services/odds.service';
 import {Router} from '@angular/router';
 import {BetService} from '../../services/bets.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,38 +20,42 @@ export class MenuComponent implements OnInit {
   nflProps:any = [];
   mlbProps:any = [];
   cfbProps:any = [];
+  actionDate:any;
+  leagueSport:number = 0;
   curTime;
 
   constructor(
     private router:Router,
     private dataService:DataService,
     private oddsService:OddsService,
-    private betService:BetService
+    private betService:BetService,
+    private authService:AuthService
   ) {}
 
   ngOnInit() {
-    this.curTime = new Date();
-    this.getProps();
-    this.setUpTennis();
+
     this.getOdds();
-    this.soccer = [{league:'England Premier League', id:94}, {league:'England League 1', id:587}, {league:'UEFA', id:6542}, {league:'UEFA Europe League Qualifying', id:5823},
-    {league:'Italy Serie A', id:199}, {league:'Spain Primera Liga', id:207}, {league:'Spain Copa Federacion', id:429},
-    {league:'Germany Bundesliga 1', id:123}, {league:'France Ligue 1', id:99}, {league:'USA MLS', id:242}, {league:'Elite Cup Friendlies', id:631},
-    {league:'Europe Friendlies', id:363}, {league:'Russia Premier League', id:153}, {league:'Republic of Ireland Premier Division', id:398},
-    {league:'Copa Sudamericano', id:445}, {league:'Brazil Serie A', id:155}];
+
+    // this.soccer = [{league:'England Premier League', id:94}, {league:'England League 1', id:587}, {league:'UEFA', id:6542}, {league:'UEFA Europe League Qualifying', id:5823},
+    // {league:'Italy Serie A', id:199}, {league:'Spain Primera Liga', id:207}, {league:'Spain Copa Federacion', id:429},
+    // {league:'Germany Bundesliga 1', id:123}, {league:'France Ligue 1', id:99}, {league:'USA MLS', id:242}, {league:'Elite Cup Friendlies', id:631},
+    // {league:'Europe Friendlies', id:363}, {league:'Russia Premier League', id:153}, {league:'Republic of Ireland Premier Division', id:398},
+    // {league:'Copa Sudamericano', id:445}, {league:'Brazil Serie A', id:155}];
+    // this.getProps();
+    // this.setUpTennis();
   }
 
-  setUpTennis(){
-    var tmpArray = [];
-    this.oddsService.getUpcomingTennisEvents().subscribe((events) => {
-      if(events.length > 0){
-        for (var i = 0; i < events.length; i++){
-          var tmpEvent = events[i].split('/');
-          this.tennis.push({id:tmpEvent[0], league:tmpEvent[1]});
-        }
-      }
-    });
-  }
+  // setUpTennis(){
+  //   var tmpArray = [];
+  //   this.oddsService.getUpcomingTennisEvents().subscribe((events) => {
+  //     if(events.length > 0){
+  //       for (var i = 0; i < events.length; i++){
+  //         var tmpEvent = events[i].split('/');
+  //         this.tennis.push({id:tmpEvent[0], league:tmpEvent[1]});
+  //       }
+  //     }
+  //   });
+  // }
 
   navigate(sport){
     this.dataService.addSport(sport);
@@ -87,33 +92,33 @@ export class MenuComponent implements OnInit {
     var tempArr = [];
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
-        var tmpGameTime = new Date(data[i].epoch);
-        console.log('Current Time: ' + this.curTime.getDate());
-        console.log('Game Time: ' + tmpGameTime.getDate);
-        this.actions.push(data[i]);
-        this.actions = this.sortEventOdds(this.actions);
-      }
-    });
-  }
-
-  getProps(){
-    this.betService.getAllCustomBets().subscribe(bets => {
-      for (var i = 0; i < bets.length; i++){
-        if(bets[i].sport=='nfl'){
-          this.nflProps.push(bets[i]);
-        } else if (bets[i].sport=='cfb'){
-          this.cfbProps.push(bets[i]);
-        } else if (bets[i].sport=='mlb'){
-          this.mlbProps.push(bets[i]);
+        var tmpGameDate = new Date(data[i].epoch).getDate();
+        if(tmpGameDate == 1){
+          this.actions.push(data[i]);
+          this.actions = this.sortEventOdds(this.actions);
         }
       }
     });
   }
 
-  props(sport){
-    this.dataService.addPropSport(sport);
-    this.router.navigate(['/props']);
-  }
+  // getProps(){
+  //   this.betService.getAllCustomBets().subscribe(bets => {
+  //     for (var i = 0; i < bets.length; i++){
+  //       if(bets[i].sport=='nfl'){
+  //         this.nflProps.push(bets[i]);
+  //       } else if (bets[i].sport=='cfb'){
+  //         this.cfbProps.push(bets[i]);
+  //       } else if (bets[i].sport=='mlb'){
+  //         this.mlbProps.push(bets[i]);
+  //       }
+  //     }
+  //   });
+  // }
+  //
+  // props(sport){
+  //   this.dataService.addPropSport(sport);
+  //   this.router.navigate(['/props']);
+  // }
 
   sortEventOdds(odds){
     if(odds.length == 1){
@@ -132,20 +137,24 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  clickShowTennis(){
-    if(this.showTennis == false){
-      this.showTennis = true;
-    } else {
-      this.showTennis = false;
-    }
-  }
+  // clickShowTennis(){
+  //   if(this.showTennis == false){
+  //     this.showTennis = true;
+  //   } else {
+  //     this.showTennis = false;
+  //   }
+  // }
+  //
+  // clickShowSoccer(){
+  //   if(this.showSoccer == false){
+  //     this.showSoccer = true;
+  //   } else {
+  //     this.showSoccer = false;
+  //   }
+  // }
 
-  clickShowSoccer(){
-    if(this.showSoccer == false){
-      this.showSoccer = true;
-    } else {
-      this.showSoccer = false;
-    }
+  addHours(date){
+
   }
 
 }

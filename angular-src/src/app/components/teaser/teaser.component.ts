@@ -116,9 +116,12 @@ export class TeaserComponent implements OnInit {
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport){
+          var tmpGameDate = new Date(data[i].epoch).getDate();
+          if(tmpGameDate == 1){
           tempArr.push(data[i]);
           tempArr = this.dataService.sortBets(tempArr);
           this.setUpActions(tempArr, this.sport);
+        }
         }
       }
     });

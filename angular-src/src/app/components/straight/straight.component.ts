@@ -40,8 +40,11 @@ export class StraightComponent implements OnInit {
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport){
+          var tmpGameDate = new Date(data[i].epoch).getDate();
+          if(tmpGameDate == 1){
           this.actions.push(data[i]);
           this.actions = this.sortEventOdds(this.actions);
+        }
         }
       }
     });
@@ -84,18 +87,18 @@ export class StraightComponent implements OnInit {
     });
   }
 
-  placeGolf(tourn, part){
-    tourn.betType = 'golf';
-    tourn.participant = part;
-    this.authService.getProfile().subscribe(profile => {
-      this.dataService.addStraightBet(tourn, profile, 'straight');
-      this.router.navigate(['confirm']);
-    },
-    err =>{
-      this.flashMessage.show('You must be logged in to place a bet.', {cssClass: 'alert-danger'});
-      return false;
-    });
-  }
+  // placeGolf(tourn, part){
+  //   tourn.betType = 'golf';
+  //   tourn.participant = part;
+  //   this.authService.getProfile().subscribe(profile => {
+  //     this.dataService.addStraightBet(tourn, profile, 'straight');
+  //     this.router.navigate(['confirm']);
+  //   },
+  //   err =>{
+  //     this.flashMessage.show('You must be logged in to place a bet.', {cssClass: 'alert-danger'});
+  //     return false;
+  //   });
+  // }
 
   addPlus(odds){
     odds = parseFloat(odds);
@@ -103,7 +106,7 @@ export class StraightComponent implements OnInit {
     if(odds>0){
       return '+';
     }else{
-      return '';
+      return odds;
     }
   }
 

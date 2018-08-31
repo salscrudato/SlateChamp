@@ -360,7 +360,7 @@ class Action {
         return '/assets/images/USF.png';
         break;
         case 'Illinois':
-        return '/assets/images/illinois fighting illini.png';
+        return '/assets/images/illinois.png';
         break;
         case 'Indiana':
         return '/assets/images/indiana hoosiers.png';

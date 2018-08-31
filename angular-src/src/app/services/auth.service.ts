@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {tokenNotExpired} from 'angular2-jwt';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +43,17 @@ export class AuthService {
       //return this.http.get('http://localhost:8080/users/profile', {headers: headers})
       return this.http.get(url, {headers: headers})
         .map(res => res.json());
+  }
+
+  getProfilePromise(){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+      const url = this.urlPrefix + 'users/profile';
+      //return this.http.get('http://localhost:8080/users/profile', {headers: headers})
+      return this.http.get(url, {headers: headers})
+        .map(res => res.json()).toPromise();
   }
 
   storeUserData(token, user){

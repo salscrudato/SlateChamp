@@ -34,21 +34,21 @@ export class ConfirmComponent implements OnInit{
 
   ngOnInit(){
     this.betType = this.dataService.getBetType().toUpperCase();
-    if(this.betType != 'PROP' && this.betType != 'FUTURE'){
-      this.bet = this.dataService.getBet();
-      this.getProfileAndAllBets();
-      this.setBetDetailsAndOdds(this.bet);
-      this.odds = this.calculateOdds(this.bet);
-      this.timer = setTimeout(() => {
-        this.flashMessage.show('You have been re-directed due to inactivity, please try again', {cssClass: 'alert-warning'});
-        this.router.navigate(['menu']);
-      }, 45000);
-    } else {
-      this.bet = this.dataService.getPropBet();
-      this.odds = this.bet.odds;
-      this.bet.betDetails = this.bet.details;
-      this.getProfileAndAllBets();
-    }
+    // if(this.betType != 'PROP' && this.betType != 'FUTURE'){
+    this.bet = this.dataService.getBet();
+    this.getProfileAndAllBets();
+    this.setBetDetailsAndOdds(this.bet);
+    this.odds = this.calculateOdds(this.bet);
+    this.timer = setTimeout(() => {
+      this.flashMessage.show('You have been re-directed due to inactivity, please try again', {cssClass: 'alert-warning'});
+      this.router.navigate(['menu']);
+    }, 60000);
+    // } else {
+    //   this.bet = this.dataService.getPropBet();
+    //   this.odds = this.bet.odds;
+    //   this.bet.betDetails = this.bet.details;
+    //   this.getProfileAndAllBets();
+    // }
   }
 
   //Gets current logged in user and then gets corresponding bets for that user
@@ -72,29 +72,29 @@ export class ConfirmComponent implements OnInit{
   });
 }
 
-placePropBet(){
-  this.clickedSubmit = true;
-  if(this.betAmount > 0){
-    let customBet = {
-      userId: this.user._id,
-      username: this.user.username,
-      description: this.bet.details,
-      odds: this.bet.odds,
-      betAmount: this.betAmount,
-      winAmount: this.calcWinAmount(this.bet.odds, this.betAmount),
-      status: 'open'
-    }
-    this.betService.placePropBet(customBet).subscribe(data => {
-      if(data){
-        this.router.navigate(['menu']);
-        this.flashMessage.show('Bet Placed', {cssClass: 'alert-success'});
-      }
-    });
-  } else {
-    this.clickedSubmit = false;
-    this.flashMessage.show('You must enter a number greater than 0', {cssClass: 'alert-warning'});
-  }
-}
+// placePropBet(){
+//   this.clickedSubmit = true;
+//   if(this.betAmount > 0){
+//     let customBet = {
+//       userId: this.user._id,
+//       username: this.user.username,
+//       description: this.bet.details,
+//       odds: this.bet.odds,
+//       betAmount: this.betAmount,
+//       winAmount: this.calcWinAmount(this.bet.odds, this.betAmount),
+//       status: 'open'
+//     }
+//     this.betService.placePropBet(customBet).subscribe(data => {
+//       if(data){
+//         this.router.navigate(['menu']);
+//         this.flashMessage.show('Bet Placed', {cssClass: 'alert-success'});
+//       }
+//     });
+//   } else {
+//     this.clickedSubmit = false;
+//     this.flashMessage.show('You must enter a number greater than 0', {cssClass: 'alert-warning'});
+//   }
+// }
 
 placeStraightBet(){
   this.clickedSubmit = true;
@@ -178,23 +178,27 @@ placeLiveBet(){
 }
 
 clickPlaceBet(){
-  if(this.betType != 'PROP' && this.betType != 'FUTURE'){
-    var curAvail = this.user.credit + this.user.currentBalance - this.amountPending;
-    if(this.betAmount < curAvail){
-      if(((this.odds)/100 < 35) && this.odds != 0){
-        if(this.betType=='LIVE'){
-          this.placeLiveBet();
-        } else {
-          this.placeStraightBet();
-        }
+  var tmpEndDate = new Date('9/1/2018');
+  var endDate = new Date(tmpEndDate.getTime() + (12*60*60*1000));
+  var curDate = new Date();
+  console.log(endDate);
+  console.log(curDate);
+  var curAvail = this.user.credit + this.user.currentBalance - this.amountPending;
+
+  if(curDate > endDate){
+    this.flashMessage.show('Bets for this league cant be placed after ' + endDate, {cssClass: 'alert-warning'});
+  } else if(this.betAmount < curAvail){
+    if(((this.odds)/100 < 50) && this.odds != 0){
+      if(this.betType=='LIVE'){
+        this.placeLiveBet();
       } else {
-        this.flashMessage.show('Bet exceeds maximum payout ratio', {cssClass: 'alert-warning'});
+        this.placeStraightBet();
       }
     } else {
-      this.flashMessage.show('Insufficient funds, available balance: $' + curAvail, {cssClass: 'alert-warning'});
+      this.flashMessage.show('Bet exceeds maximum payout ratio', {cssClass: 'alert-warning'});
     }
-  }else{
-    this.placePropBet();
+  } else {
+    this.flashMessage.show('Insufficient funds, available balance: $' + curAvail, {cssClass: 'alert-warning'});
   }
 }
 
@@ -269,98 +273,98 @@ setBetDescription(bet){
       bet.line = bet.totalNumber;
     }
     break;
-    case 'draw':
-    bet.betDetails = awayTeam + " @ " + homeTeam + " Draw " + bet.drawOdds;
-    bet.odds = bet.drawOdds;
-    break;
-    case 'awayTeamFirstHalf':
-    bet.betDetails = awayTeam + ' First 5 Innings ' + bet.awayTeamFirstHalf;
-    bet.odds = bet.awayTeamFirstHalf;
-    break;
-    case 'homeTeamFirstHalf':
-    bet.betDetails = homeTeam + ' First 5 Innings ' + bet.homeTeamFirstHalf;
-    bet.odds = bet.homeTeamFirstHalf;
-    break;
-    case 'awayTeamFirstHalfFB':
-    bet.betDetails = awayTeam + ' First Half ' + bet.awayTeamFirstHalf;
-    bet.odds = bet.awayTeamFirstHalf;
-    break;
-    case 'homeTeamFirstHalfFB':
-    bet.betDetails = homeTeam + ' First Half ' + bet.homeTeamFirstHalf;
-    bet.odds = bet.homeTeamFirstHalf;
-    break;
-    case 'awayTeamFirstHalfSpread':
-    const awayTeamFirstHalfSpread = bet.awayTeamRLFirstHalf;
-    const awayTeamFirstHalfSpreadOdds = bet.awayTeamRLOddsFirstHalf;
-    bet.betDetails = awayTeam + " Spread " + awayTeamFirstHalfSpread + " " + awayTeamFirstHalfSpreadOdds;
-    bet.odds = awayTeamFirstHalfSpreadOdds;
-    bet.line = bet.awayTeamRLFirstHalf;
-    break;
-    case 'homeTeamFirstHalfSpread':
-    const homeTeamFirstHalfSpread = bet.homeTeamRLFirstHalf;
-    const homeTeamFirstHalfSpreadOdds = bet.homeTeamRLOddsFirstHalf;
-    bet.betDetails = homeTeam + " Spread " + homeTeamFirstHalfSpread + " " + homeTeamFirstHalfSpreadOdds;
-    bet.odds = homeTeamFirstHalfSpreadOdds;
-    bet.line = bet.homeTeamRLFirstHalf;
-    break;
-    case 'firstHalfOverFB':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + 'First Half Over ' + bet.firstHalfOver + ' ' +  bet.firstHalfOverOdds;
-    bet.odds = bet.firstHalfOverOdds;
-    bet.line = bet.firstHalfOver;
-    break;
-    case 'firstHalfUnderFB':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + 'First Half Under ' + bet.firstHalfUnder + ' ' +  bet.firstHalfUnderOdds;
-    bet.odds = bet.firstHalfUnderOdds;
-    bet.line = bet.firstHalfUnder;
-    break;
-    case 'homeTeamFirstHalf':
-    bet.betDetails = awayTeam + ' First 5 Innings ' + bet.homeTeamFirstHalf;
-    bet.odds = bet.homeTeamFirstHalf;
-    break;
-    case 'homeTeamOver':
-    bet.betDetails = homeTeam + ' Over ' + bet.homeTeamTotalLine;
-    bet.odds = bet.homeTeamOverOdds;
-    break;
-    case 'homeTeamUnder':
-    bet.betDetails = homeTeam + ' Under ' + bet.homeTeamTotalLine;
-    bet.odds = bet.homeTeamUnderOdds;
-    break;
-    case 'awayTeamOver':
-    bet.betDetails = awayTeam + ' Over ' + bet.awayTeamTotalLine;
-    bet.odds = bet.awayTeamOverOdds;
-    break;
-    case 'awayTeamUnder':
-    bet.betDetails = awayTeam + ' Under ' + bet.awayTeamTotalLine;
-    bet.odds = bet.awayTeamUnderOdds;
-    break;
-    case 'runInFirst':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Run In First';
-    bet.odds = bet.runInFirst;
-    break;
-    case 'noRunInFirst':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + ' No Runs In First';
-    bet.odds = bet.noRunInFirst;
-    break;
-    case 'bothScoreYes':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Both Score - Yes ' + bet.bothScoreYes;
-    bet.odds = bet.bothScoreYes;
-    break;
-    case 'bothScoreNo':
-    bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Both Score - No ' + bet.bothScoreNo;
-    bet.odds = bet.bothScoreNo;
-    break;
-    case 'golf':
-    bet.betDetails = bet.participant.name + ' (' + bet.participant.odds + ')' + ' To win the ' + bet.eventName;
-    bet.odds = bet.participant.odds;
-    break;
-    case 'overUFC':
-    bet.betDetails = bet.awayTeam + ' @ ' + bet.homeTeam + ' Over ' + bet.totalNumber + ' ' + bet.overLine;
-    bet.odds = bet.overLine;
-    break;
-    case 'underUFC':
-    bet.betDetails = bet.awayTeam + ' @ ' + bet.homeTeam + ' Under ' + bet.totalNumber + ' ' + bet.underLine;
-    bet.odds = bet.underLine;
-    break;
+    // case 'draw':
+    // bet.betDetails = awayTeam + " @ " + homeTeam + " Draw " + bet.drawOdds;
+    // bet.odds = bet.drawOdds;
+    // break;
+    // case 'awayTeamFirstHalf':
+    // bet.betDetails = awayTeam + ' First 5 Innings ' + bet.awayTeamFirstHalf;
+    // bet.odds = bet.awayTeamFirstHalf;
+    // break;
+    // case 'homeTeamFirstHalf':
+    // bet.betDetails = homeTeam + ' First 5 Innings ' + bet.homeTeamFirstHalf;
+    // bet.odds = bet.homeTeamFirstHalf;
+    // break;
+    // case 'awayTeamFirstHalfFB':
+    // bet.betDetails = awayTeam + ' First Half ' + bet.awayTeamFirstHalf;
+    // bet.odds = bet.awayTeamFirstHalf;
+    // break;
+    // case 'homeTeamFirstHalfFB':
+    // bet.betDetails = homeTeam + ' First Half ' + bet.homeTeamFirstHalf;
+    // bet.odds = bet.homeTeamFirstHalf;
+    // break;
+    // case 'awayTeamFirstHalfSpread':
+    // const awayTeamFirstHalfSpread = bet.awayTeamRLFirstHalf;
+    // const awayTeamFirstHalfSpreadOdds = bet.awayTeamRLOddsFirstHalf;
+    // bet.betDetails = awayTeam + " Spread " + awayTeamFirstHalfSpread + " " + awayTeamFirstHalfSpreadOdds;
+    // bet.odds = awayTeamFirstHalfSpreadOdds;
+    // bet.line = bet.awayTeamRLFirstHalf;
+    // break;
+    // case 'homeTeamFirstHalfSpread':
+    // const homeTeamFirstHalfSpread = bet.homeTeamRLFirstHalf;
+    // const homeTeamFirstHalfSpreadOdds = bet.homeTeamRLOddsFirstHalf;
+    // bet.betDetails = homeTeam + " Spread " + homeTeamFirstHalfSpread + " " + homeTeamFirstHalfSpreadOdds;
+    // bet.odds = homeTeamFirstHalfSpreadOdds;
+    // bet.line = bet.homeTeamRLFirstHalf;
+    // break;
+    // case 'firstHalfOverFB':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + 'First Half Over ' + bet.firstHalfOver + ' ' +  bet.firstHalfOverOdds;
+    // bet.odds = bet.firstHalfOverOdds;
+    // bet.line = bet.firstHalfOver;
+    // break;
+    // case 'firstHalfUnderFB':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + 'First Half Under ' + bet.firstHalfUnder + ' ' +  bet.firstHalfUnderOdds;
+    // bet.odds = bet.firstHalfUnderOdds;
+    // bet.line = bet.firstHalfUnder;
+    // break;
+    // case 'homeTeamFirstHalf':
+    // bet.betDetails = awayTeam + ' First 5 Innings ' + bet.homeTeamFirstHalf;
+    // bet.odds = bet.homeTeamFirstHalf;
+    // break;
+    // case 'homeTeamOver':
+    // bet.betDetails = homeTeam + ' Over ' + bet.homeTeamTotalLine;
+    // bet.odds = bet.homeTeamOverOdds;
+    // break;
+    // case 'homeTeamUnder':
+    // bet.betDetails = homeTeam + ' Under ' + bet.homeTeamTotalLine;
+    // bet.odds = bet.homeTeamUnderOdds;
+    // break;
+    // case 'awayTeamOver':
+    // bet.betDetails = awayTeam + ' Over ' + bet.awayTeamTotalLine;
+    // bet.odds = bet.awayTeamOverOdds;
+    // break;
+    // case 'awayTeamUnder':
+    // bet.betDetails = awayTeam + ' Under ' + bet.awayTeamTotalLine;
+    // bet.odds = bet.awayTeamUnderOdds;
+    // break;
+    // case 'runInFirst':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Run In First';
+    // bet.odds = bet.runInFirst;
+    // break;
+    // case 'noRunInFirst':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + ' No Runs In First';
+    // bet.odds = bet.noRunInFirst;
+    // break;
+    // case 'bothScoreYes':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Both Score - Yes ' + bet.bothScoreYes;
+    // bet.odds = bet.bothScoreYes;
+    // break;
+    // case 'bothScoreNo':
+    // bet.betDetails = awayTeam + ' @ ' + homeTeam + ' Both Score - No ' + bet.bothScoreNo;
+    // bet.odds = bet.bothScoreNo;
+    // break;
+    // case 'golf':
+    // bet.betDetails = bet.participant.name + ' (' + bet.participant.odds + ')' + ' To win the ' + bet.eventName;
+    // bet.odds = bet.participant.odds;
+    // break;
+    // case 'overUFC':
+    // bet.betDetails = bet.awayTeam + ' @ ' + bet.homeTeam + ' Over ' + bet.totalNumber + ' ' + bet.overLine;
+    // bet.odds = bet.overLine;
+    // break;
+    // case 'underUFC':
+    // bet.betDetails = bet.awayTeam + ' @ ' + bet.homeTeam + ' Under ' + bet.totalNumber + ' ' + bet.underLine;
+    // bet.odds = bet.underLine;
+    // break;
     case 'underTeaser':
     bet.betDetails = bet.awayTeam + ' @ ' + bet.homeTeam + ' Under ' + bet.totalNumberTeaserUnder;
     bet.totalNumber = bet.totalNumberTeaserUnder;

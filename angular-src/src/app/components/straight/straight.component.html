@@ -30,7 +30,7 @@
           <div class="row pl-3">{{action.awayTeam}}</div>
           <div class="row border-bottom pb-1 pt-1">
             <div class="col">
-              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.awayTeamML!=0 && action.awayTeamML>-400 && action.awayTeamML<400" (click)="placeBet(action,'awayTeamML')">{{action.awayTeamML}}</a>
+              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.awayTeamML!=0" (click)="placeBet(action,'awayTeamML')">{{action.awayTeamML}}</a>
             </div>
             <div class="col" align="center">
               <a class="btn btn-primary btn-block btn-sm text-light" *ngIf="action.awayTeamRL!=0" (click)="placeBet(action,'awayTeamRL')">{{action.awayTeamRL}} {{action.awayTeamRLOdds}}</a>
@@ -45,7 +45,7 @@
           <div class="row pl-3">{{action.homeTeam}}</div>
           <div class="row pb-1 pt-1">
             <div class="col">
-              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.homeTeamML!=0 && action.homeTeamML>-400 && action.homeTeamML<400" (click)="placeBet(action,'homeTeamML')">{{action.homeTeamML}}</a>
+              <a class="btn btn-primary btn-block btn-sm text-light float-left" *ngIf="action.homeTeamML!=0" (click)="placeBet(action,'homeTeamML')">{{action.homeTeamML}}</a>
             </div>
             <div class="col" align="center">
               <a class="btn btn-primary btn-block btn-sm text-light" *ngIf="action.homeTeamRL!=0" (click)="placeBet(action,'homeTeamRL')">{{action.homeTeamRL}} {{action.homeTeamRLOdds}}</a>
