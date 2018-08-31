@@ -372,7 +372,7 @@ class Action {
         return '/assets/images/maryland-terps-logo.png';
         break;
         case 'Michigan':
-        return '/assets/images/michigan.png';
+        return '/assets/images/michigan.jpg';
         break;
         case 'Michigan State':
         return '/assets/images/michigan-state-university-logo.png';

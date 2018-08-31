@@ -998,7 +998,7 @@ var ConfirmComponent = (function () {
         if (curDate > endDate) {
             this.flashMessage.show('Bets for this league cant be placed after ' + endDate, { cssClass: 'alert-warning' });
         }
-        else if (this.betAmount < curAvail) {
+        else if (this.betAmount <= curAvail) {
             if (((this.odds) / 100 < 100) && this.odds != 0) {
                 if (this.betType == 'LIVE') {
                     this.placeLiveBet();
