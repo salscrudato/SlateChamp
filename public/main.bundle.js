@@ -1808,8 +1808,8 @@ var MenuComponent = (function () {
         this.oddsService.getOdds().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
                 var tmpGameTime = new Date(data[i].epoch);
-                console.log(_this.curTime);
-                console.log(tmpGameTime);
+                console.log('Current Time: ' + _this.curTime);
+                console.log('Game Time: ' + tmpGameTime);
                 _this.actions.push(data[i]);
                 _this.actions = _this.sortEventOdds(_this.actions);
             }
