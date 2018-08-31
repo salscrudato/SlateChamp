@@ -13,3 +13,8 @@
 .topNav {
   margin-top:5rem;
 }
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}

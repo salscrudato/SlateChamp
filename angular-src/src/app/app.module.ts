@@ -31,6 +31,7 @@ import { TeaserComponent } from './components/teaser/teaser.component';
 import { PropsComponent } from './components/props/props.component';
 import { SlatechampComponent } from './components/slatechamp/slatechamp.component';
 import { LeaguesComponent } from './components/leagues/leagues.component';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
   {path: 'teaser', component:TeaserComponent},
   {path: 'props', component:PropsComponent},
   {path: 'slatechamp', component:SlatechampComponent},
-  {path: 'leagues', component:LeaguesComponent}
+  {path: 'leagues', component:LeaguesComponent},
+  {path: 'leaderboard', component:LeaderboardComponent}
 ]
 
 @NgModule({
@@ -68,7 +70,8 @@ const appRoutes: Routes = [
     TeaserComponent,
     PropsComponent,
     SlatechampComponent,
-    LeaguesComponent
+    LeaguesComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,

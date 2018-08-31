@@ -101,4 +101,11 @@ router.get('/allProfiles', function(req, res){
   });
 });
 
+router.get('/getProfileById', function(req, res){
+	var userId = req.query.userId;
+	User.getUserById(userId, function(err, user){
+		res.send(user);
+	});
+});
+
 module.exports = router;
