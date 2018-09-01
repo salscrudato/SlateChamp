@@ -19,8 +19,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let part of league.participants">
-                <td>{{part.name}}</td>
+              <tr *ngFor="let part of league.participants" (click)="getPlayerBets(part._id)" data-toggle="modal" data-target="#exampleModal">
+                <td>{{part.name}} - Click to view bets</td>
                 <td>{{part.currentBalance}}</td>
               </tr>
             </tbody>
@@ -29,5 +29,25 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Player Bets</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body fontSmall mt-0 mb-0 pb-0 pt-0" *ngFor="let tmp of tmpBets">
+        {{tmp}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+      </div>
+    </div>
   </div>
 </div>

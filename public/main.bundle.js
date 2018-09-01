@@ -537,7 +537,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_user_service__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_odds_service__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_data_service__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_league_service__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_angular2_flash_messages__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_angular2_flash_messages__);
@@ -669,7 +669,7 @@ var AppModule = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_user_service__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_league_service__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__(18);
@@ -805,7 +805,7 @@ var AdminComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_data_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages__ = __webpack_require__(31);
@@ -1337,6 +1337,7 @@ var HomeComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_league_service__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_bets_service__ = __webpack_require__(70);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeaderboardComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1350,13 +1351,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LeaderboardComponent = (function () {
-    function LeaderboardComponent(leagueService, userService) {
+    function LeaderboardComponent(leagueService, userService, betService) {
         this.leagueService = leagueService;
         this.userService = userService;
+        this.betService = betService;
         this.leagues = [];
         this.playerIds = [];
         this.players = [];
+        this.tmpBets = [];
     }
     LeaderboardComponent.prototype.ngOnInit = function () {
         this.getAllLeagues();
@@ -1382,6 +1386,30 @@ var LeaderboardComponent = (function () {
             });
         }
     };
+    LeaderboardComponent.prototype.getPlayerBets = function (playerId) {
+        var _this = this;
+        var curTime = new Date;
+        var tmpEndDate = new Date('9/1/2018');
+        var endDate = new Date(tmpEndDate.getTime() + (12 * 60 * 60 * 1000));
+        console.log(curTime);
+        console.log(endDate);
+        if (curTime > endDate) {
+            this.betService.getBetsById(playerId, 'all').subscribe(function (bets) {
+                for (var i = 0; i < bets.length; i++) {
+                    _this.tmpBets.push('Bet # ' + i + ':\n' + bets[i].betType + ': ' + bets[i].description.replace(',', ' parlayed with '));
+                }
+            }, function (error) {
+                console.log(error);
+                return false;
+            });
+        }
+        else {
+            this.tmpBets.push('Bets cannot be viewed until the contest locks');
+        }
+    };
+    LeaderboardComponent.prototype.closeModal = function () {
+        this.tmpBets = [];
+    };
     LeaderboardComponent.prototype.sortPlayers = function (players) {
         if (players.length == 1) {
             return players;
@@ -1405,10 +1433,10 @@ var LeaderboardComponent = (function () {
             template: __webpack_require__(720),
             styles: [__webpack_require__(702)]
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_league_service__["a" /* LeagueService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__services_league_service__["a" /* LeagueService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_league_service__["a" /* LeagueService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__services_league_service__["a" /* LeagueService */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_user_service__["a" /* UserService */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_bets_service__["a" /* BetService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services_bets_service__["a" /* BetService */]) === 'function' && _c) || Object])
     ], LeaderboardComponent);
     return LeaderboardComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=/Users/salscrudato/MEAN/slatechamp/angular-src/src/leaderboard.component.js.map
 
@@ -1766,7 +1794,7 @@ var LiveComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_data_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_odds_service__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(19);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2311,7 +2339,7 @@ var ParlayComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_data_service__ = __webpack_require__(25);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2407,7 +2435,7 @@ var ProfileComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_data_service__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_bets_service__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_auth_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular2_flash_messages__ = __webpack_require__(31);
@@ -2989,6 +3017,124 @@ module.exports = ".inside {\n    display: inline-block;\n    position: fixed;\n 
 
 /***/ }),
 
+/***/ 70:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BetService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var BetService = (function () {
+    function BetService(http) {
+        this.http = http;
+    }
+    BetService.prototype.placeBet = function (bet) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.post('http://localhost:8080/bets/placeBet', bet, {headers: headers})
+        return this.http.post('bets/placeBet', bet, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.closeBet = function (betId, result) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        var bet = {
+            betId: betId,
+            status: result
+        };
+        headers.append('Content-Type', 'application/json');
+        //return this.http.post('http://localhost:8080/bets/closePending', bet, {headers: headers})
+        return this.http.post('bets/closePending', bet, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.getBetsById = function (profileId, status) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        var userId = profileId;
+        var url = 'bets/getBets?userId=' + userId + '&status=' + status;
+        var url2 = 'http://localhost:8080/bets/getBets?userId=' + userId + '&status=' + status;
+        headers.append('Content-Type', 'application/json');
+        //return this.http.get(url2, {headers: headers})
+        return this.http.get(url, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.getBets = function (profile, status) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        var userId = profile.user._id;
+        var url = 'bets/getBets?userId=' + userId + '&status=' + status;
+        var url2 = 'http://localhost:8080/bets/getBets?userId=' + userId + '&status=' + status;
+        headers.append('Content-Type', 'application/json');
+        //return this.http.get(url2, {headers: headers})
+        return this.http.get(url, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.getAllPendings = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.get('http://localhost:8080/bets/getAllPendings', {headers: headers})
+        return this.http.get('bets/getAllPendings', { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.createCustom = function (bet) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.post('http://localhost:8080/bets/createCustom', bet, {headers: headers})
+        return this.http.post('bets/createCustom', bet, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.getAllCustomBets = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.get('http://localhost:8080/bets/allCustomBets', {headers: headers})
+        return this.http.get('bets/allCustomBets', { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.placePropBet = function (bet) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.post('http://localhost:8080/bets/placePropBet', bet, {headers: headers})
+        return this.http.post('bets/placePropBet', bet, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.getPropBets = function (profile, status) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        var userId = profile.user._id;
+        //const url = 'http://localhost:8080/bets/getPropBets?userId=' + userId + '&status=' + status;
+        var url = 'bets/getPropBets?userId=' + userId + '&status=' + status;
+        headers.append('Content-Type', 'application/json');
+        return this.http.get(url, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService.prototype.expireCustomBet = function (bet) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        //return this.http.post('http://localhost:8080/bets/closeCustomBet', bet, {headers: headers})
+        return this.http.post('bets/closeCustomBet', bet, { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    BetService = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === 'function' && _a) || Object])
+    ], BetService);
+    return BetService;
+    var _a;
+}());
+//# sourceMappingURL=/Users/salscrudato/MEAN/slatechamp/angular-src/src/bets.service.js.map
+
+/***/ }),
+
 /***/ 700:
 /***/ (function(module, exports) {
 
@@ -3006,7 +3152,7 @@ module.exports = ".masthead {\n  position: relative;\n  width: 100%;\n  height: 
 /***/ 702:
 /***/ (function(module, exports) {
 
-module.exports = ".topNav{\n  margin-top:5rem;\n}\n\n.headerFont{\n  font-size: 100%;\n}\n"
+module.exports = ".topNav{\n  margin-top:5rem;\n}\n\n.headerFont{\n  font-size: 100%;\n}\n\n.fontSmall{\n  font-size:60%;\n}\n"
 
 /***/ }),
 
@@ -3132,7 +3278,7 @@ module.exports = "<header class=\"masthead\">\n\t<div class=\"container h-100 al
 /***/ 720:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"text-muted topNav\" *ngIf=\"leagues.length < 1\" align=\"center\"><p>Loading League Leaderboard</p></div>\n<div class=\"loader\" *ngIf=\"leagues.length < 1\"></div>\n\n<div class=\"container pt-5 bg-dark\" *ngIf=\"leagues.length > 0\">\n  <div class=\"row\" align=\"center\">\n\n    <div class=\"row mt-3 ml-0 mr-0\" *ngFor=\"let league of leagues\">\n      <div class=\"col bg-dark block text-light p-0 m-0 h-100\" *ngFor=\"let league of leagues\">\n        <div class=\"col\" align=\"center\">\n          <h5 class=\"headerFont\">{{league.name}} - Total Pool: {{league.buyin * league.participants.length}}</h5>\n        </div>\n        <div>\n          <table class=\"table table-dark table-hover w-100\">\n            <thead>\n              <tr>\n                <th style=\"width:75%\">Username</th>\n                <th style=\"width:25%\">Current Balance</th>\n                <!-- <th style=\"width:25%\">Prize</th> -->\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let part of league.participants\">\n                <td>{{part.name}}</td>\n                <td>{{part.currentBalance}}</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"text-muted topNav\" *ngIf=\"leagues.length < 1\" align=\"center\"><p>Loading League Leaderboard</p></div>\n<div class=\"loader\" *ngIf=\"leagues.length < 1\"></div>\n\n<div class=\"container pt-5 bg-dark\" *ngIf=\"leagues.length > 0\">\n  <div class=\"row\" align=\"center\">\n\n    <div class=\"row mt-3 ml-0 mr-0\" *ngFor=\"let league of leagues\">\n      <div class=\"col bg-dark block text-light p-0 m-0 h-100\" *ngFor=\"let league of leagues\">\n        <div class=\"col\" align=\"center\">\n          <h5 class=\"headerFont\">{{league.name}} - Total Pool: {{league.buyin * league.participants.length}}</h5>\n        </div>\n        <div>\n          <table class=\"table table-dark table-hover w-100\">\n            <thead>\n              <tr>\n                <th style=\"width:75%\">Username</th>\n                <th style=\"width:25%\">Current Balance</th>\n                <!-- <th style=\"width:25%\">Prize</th> -->\n              </tr>\n            </thead>\n            <tbody>\n              <tr *ngFor=\"let part of league.participants\" (click)=\"getPlayerBets(part._id)\" data-toggle=\"modal\" data-target=\"#exampleModal\">\n                <td>{{part.name}} - Click to view bets</td>\n                <td>{{part.currentBalance}}</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</div>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Player Bets</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body fontSmall mt-0 mb-0 pb-0 pt-0\" *ngFor=\"let tmp of tmpBets\">\n        {{tmp}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3232,114 +3378,6 @@ module.exports = "<div class=\"container pt-5 mb-5 bg-dark\">\n<div class=\"row\
 
 module.exports = __webpack_require__(400);
 
-
-/***/ }),
-
-/***/ 84:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BetService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var BetService = (function () {
-    function BetService(http) {
-        this.http = http;
-    }
-    BetService.prototype.placeBet = function (bet) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/bets/placeBet', bet, {headers: headers})
-        return this.http.post('bets/placeBet', bet, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.closeBet = function (betId, result) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        var bet = {
-            betId: betId,
-            status: result
-        };
-        headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/bets/closePending', bet, {headers: headers})
-        return this.http.post('bets/closePending', bet, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.getBets = function (profile, status) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        var userId = profile.user._id;
-        var url = 'bets/getBets?userId=' + userId + '&status=' + status;
-        var url2 = 'http://localhost:8080/bets/getBets?userId=' + userId + '&status=' + status;
-        headers.append('Content-Type', 'application/json');
-        //return this.http.get(url2, {headers: headers})
-        return this.http.get(url, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.getAllPendings = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.get('http://localhost:8080/bets/getAllPendings', {headers: headers})
-        return this.http.get('bets/getAllPendings', { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.createCustom = function (bet) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/bets/createCustom', bet, {headers: headers})
-        return this.http.post('bets/createCustom', bet, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.getAllCustomBets = function () {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.get('http://localhost:8080/bets/allCustomBets', {headers: headers})
-        return this.http.get('bets/allCustomBets', { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.placePropBet = function (bet) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/bets/placePropBet', bet, {headers: headers})
-        return this.http.post('bets/placePropBet', bet, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.getPropBets = function (profile, status) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        var userId = profile.user._id;
-        //const url = 'http://localhost:8080/bets/getPropBets?userId=' + userId + '&status=' + status;
-        var url = 'bets/getPropBets?userId=' + userId + '&status=' + status;
-        headers.append('Content-Type', 'application/json');
-        return this.http.get(url, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService.prototype.expireCustomBet = function (bet) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
-        headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/bets/closeCustomBet', bet, {headers: headers})
-        return this.http.post('bets/closeCustomBet', bet, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    BetService = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === 'function' && _a) || Object])
-    ], BetService);
-    return BetService;
-    var _a;
-}());
-//# sourceMappingURL=/Users/salscrudato/MEAN/slatechamp/angular-src/src/bets.service.js.map
 
 /***/ }),
 

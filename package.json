@@ -16,6 +16,7 @@
     "jsonwebtoken": "*",
     "mongoose": "*",
     "ng4-loading-spinner": "^1.2.3",
+    "ngx-modialog": "^5.0.1",
     "ngx-order-pipe": "^2.0.1",
     "passport": "*",
     "passport-jwt": "*",

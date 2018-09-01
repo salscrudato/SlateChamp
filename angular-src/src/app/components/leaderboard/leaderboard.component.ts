@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LeagueService} from '../../services/league.service';
 import {AuthService} from '../../services/auth.service';
 import {UserService} from '../../services/user.service';
+import {BetService} from '../../services/bets.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
@@ -15,9 +16,12 @@ export class LeaderboardComponent implements OnInit {
   playerIds:any = [];
   players:any = [];
 
+  tmpBets:any = [];
+
   constructor(
     private leagueService:LeagueService,
-    private userService:UserService
+    private userService:UserService,
+    private betService:BetService
   ) { }
 
   ngOnInit() {
@@ -45,6 +49,34 @@ export class LeaderboardComponent implements OnInit {
         }
       );
     }
+  }
+
+  getPlayerBets(playerId){
+
+    var curTime = new Date;
+    var tmpEndDate = new Date('9/1/2018');
+    var endDate = new Date(tmpEndDate.getTime() + (12*60*60*1000));
+    console.log(curTime);
+    console.log(endDate);
+
+    if(curTime > endDate){
+      this.betService.getBetsById(playerId, 'all').subscribe(bets => {
+        for(var i = 0; i < bets.length; i++){
+          this.tmpBets.push('Bet # ' + i + ':\n' + bets[i].betType + ': ' + bets[i].description.replace(',',' parlayed with '));
+          // this.tmpBets.push(bets[i].betType + ': ' + bets[i].description.replace(',',' parlayed with ') + '\n');
+        }
+      }, error =>{
+        console.log(error);
+        return false;
+      });
+
+    } else {
+      this.tmpBets.push('Bets cannot be viewed until the contest locks');
+    }
+  }
+
+  closeModal(){
+    this.tmpBets = [];
   }
 
   sortPlayers(players){
