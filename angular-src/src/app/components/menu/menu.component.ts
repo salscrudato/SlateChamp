@@ -92,11 +92,8 @@ export class MenuComponent implements OnInit {
     var tempArr = [];
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
-        var tmpGameDate = new Date(data[i].epoch).getDate();
-        if(tmpGameDate == 1){
           this.actions.push(data[i]);
           this.actions = this.sortEventOdds(this.actions);
-        }
       }
     });
   }
