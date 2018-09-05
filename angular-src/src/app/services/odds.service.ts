@@ -15,8 +15,8 @@ export class OddsService {
   getOdds(){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/odds/all')
-    //return this.http.get('odds/all')
+    //return this.http.get('http://localhost:8080/odds/all')
+    return this.http.get('odds/all')
     .map(res => res.json());
   }
 

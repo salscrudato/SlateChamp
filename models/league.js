@@ -13,19 +13,18 @@ const config = require('../config/database');
 const LeagueSchema = mongoose.Schema({
   description:{
     type: String,
-    required: true
+    required: true,
+    default: 'test'
   },
   sport: {
     type: Number,
     required: true
   },
   startTime: {
-    type: Date,
-    required: true
+    type: Date
   },
   endTime: {
-    type: Date,
-    required: true
+    type: Date
   },
   buyin: {
     type: Number,

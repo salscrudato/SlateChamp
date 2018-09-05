@@ -31,19 +31,22 @@ var LeagueService = (function () {
     LeagueService.prototype.createLeague = function (league) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/league/create', league, { headers: headers })
+        //return this.http.post('http://localhost:8080/league/create', league, {headers: headers})
+        return this.http.post('league/create', league, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     LeagueService.prototype.closeLeague = function (league) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/league/close', league, { headers: headers })
+        //return this.http.post('http://localhost:8080/league/close', league, {headers: headers})
+        return this.http.post('league/close', league, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     LeagueService.prototype.getAllLeagues = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/league/getAll', { headers: headers })
+        //return this.http.get('http://localhost:8080/league/getAll', {headers: headers})
+        return this.http.get('league/getAll', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     LeagueService.prototype.addParticipant = function (leagueId, user) {
@@ -53,7 +56,8 @@ var LeagueService = (function () {
         };
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/league/addParticipant', body, { headers: headers })
+        //return this.http.post('http://localhost:8080/league/addParticipant', body, {headers: headers})
+        return this.http.post('league/addParticipant', body, { headers: headers })
             .map(function (res) { return res.json(); })
             .toPromise();
     };
@@ -424,7 +428,8 @@ var OddsService = (function () {
     OddsService.prototype.getOdds = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/odds/all')
+        //return this.http.get('http://localhost:8080/odds/all')
+        return this.http.get('odds/all')
             .map(function (res) { return res.json(); });
     };
     //==========Live Events from Bet365==========
@@ -1867,11 +1872,8 @@ var MenuComponent = (function () {
         var tempArr = [];
         this.oddsService.getOdds().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
-                var tmpGameDate = new Date(data[i].epoch).getDate();
-                if (tmpGameDate == 1) {
-                    _this.actions.push(data[i]);
-                    _this.actions = _this.sortEventOdds(_this.actions);
-                }
+                _this.actions.push(data[i]);
+                _this.actions = _this.sortEventOdds(_this.actions);
             }
         });
     };
@@ -3389,25 +3391,29 @@ var UserService = (function () {
     UserService.prototype.getAllUsers = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/users/allProfiles', { headers: headers })
+        //return this.http.get('http://localhost:8080/users/allProfiles', {headers: headers})
+        return this.http.get('users/allProfiles', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     UserService.prototype.updateBalance = function (updatedAmount) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/users/updateBalance', updatedAmount, { headers: headers })
+        //return this.http.post('http://localhost:8080/users/updateBalance', updatedAmount, {headers: headers})
+        return this.http.post('users/updateBalance', updatedAmount, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     UserService.prototype.updateLeague = function (body) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/users/updateLeague', body, { headers: headers })
+        //return this.http.post('http://localhost:8080/users/updateLeague', body, {headers: headers})
+        return this.http.post('users/updateLeague', body, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     UserService.prototype.getProfileById = function (userId) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/users/getProfileById?userId=' + userId)
+        //return this.http.get('http://localhost:8080/users/getProfileById?userId=' + userId)
+        return this.http.get('users/getProfileById?userId=' + userId)
             .map(function (res) { return res.json(); })
             .toPromise();
     };
