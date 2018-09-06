@@ -24,8 +24,8 @@ export class OddsService {
   getLiveEvents(sportId, leagueId){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
-    //return this.http.get('odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
+    //return this.http.get('http://localhost:8080/odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
+    return this.http.get('odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
     .map(res => res.json())
     .toPromise();
   }
@@ -34,8 +34,8 @@ export class OddsService {
   getLiveEventOdds(eventId, homeTeam, homeTeamImage, awayTeam, awayTeamImage, sportId, epoch){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
-    //return this.http.get('odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
+    //return this.http.get('http://localhost:8080/odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
+    return this.http.get('odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
     .map(res => res.json());
   }
 
@@ -43,8 +43,8 @@ export class OddsService {
   getUpcomingEvents(sportId, leagueId){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:8080/odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
-    //return this.http.get('odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
+    //return this.http.get('http://localhost:8080/odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
+    return this.http.get('odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
     .map(res => res.json())
     .toPromise();
   }

@@ -3,6 +3,10 @@
   margin-right: 0px;
 }
 
+.imageDivHeight {
+  height: 3rem;
+}
+
 .card-pricing.popular {
     z-index: 1;
     border: 3px solid #007bff;

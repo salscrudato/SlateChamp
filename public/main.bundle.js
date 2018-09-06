@@ -56,8 +56,7 @@ var LeagueService = (function () {
         };
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:8080/league/addParticipant', body, {headers: headers})
-        return this.http.post('league/addParticipant', body, { headers: headers })
+        return this.http.post('http://localhost:8080/league/addParticipant', body, { headers: headers })
             .map(function (res) { return res.json(); })
             .toPromise();
     };
@@ -115,7 +114,8 @@ var AuthService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         var url = this.urlPrefix + 'users/authenticate';
-        return this.http.post('http://localhost:8080/users/authenticate', user, { headers: headers })
+        //return this.http.post('http://localhost:8080/users/authenticate', user, {headers: headers})
+        return this.http.post(url, user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.getProfile = function () {
@@ -124,7 +124,8 @@ var AuthService = (function () {
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
         var url = this.urlPrefix + 'users/profile';
-        return this.http.get('http://localhost:8080/users/profile', { headers: headers })
+        //return this.http.get('http://localhost:8080/users/profile', {headers: headers})
+        return this.http.get(url, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.getProfilePromise = function () {
@@ -133,7 +134,8 @@ var AuthService = (function () {
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
         var url = this.urlPrefix + 'users/profile';
-        return this.http.get('http://localhost:8080/users/profile', { headers: headers })
+        //return this.http.get('http://localhost:8080/users/profile', {headers: headers})
+        return this.http.get(url, { headers: headers })
             .map(function (res) { return res.json(); }).toPromise();
     };
     AuthService.prototype.storeUserData = function (token, user) {
@@ -436,7 +438,8 @@ var OddsService = (function () {
     OddsService.prototype.getLiveEvents = function (sportId, leagueId) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
+        //return this.http.get('http://localhost:8080/odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
+        return this.http.get('odds/events?sportId=' + sportId + '&leagueId=' + leagueId)
             .map(function (res) { return res.json(); })
             .toPromise();
     };
@@ -444,14 +447,16 @@ var OddsService = (function () {
     OddsService.prototype.getLiveEventOdds = function (eventId, homeTeam, homeTeamImage, awayTeam, awayTeamImage, sportId, epoch) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
+        //return this.http.get('http://localhost:8080/odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
+        return this.http.get('odds/eventOdds?eventId=' + eventId + '&homeTeam=' + homeTeam + '&awayTeam=' + awayTeam + "&awayTeamImage=" + awayTeamImage + '&homeTeamImage=' + homeTeamImage + '&sportId=' + sportId + '&epoch=' + epoch)
             .map(function (res) { return res.json(); });
     };
     //==========Upcoming Events from Bet365==========
     OddsService.prototype.getUpcomingEvents = function (sportId, leagueId) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
+        //return this.http.get('http://localhost:8080/odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
+        return this.http.get('odds/upcomingEvents?sportId=' + sportId + '&leagueId=' + leagueId)
             .map(function (res) { return res.json(); })
             .toPromise();
     };
@@ -3033,7 +3038,8 @@ var BetService = (function () {
     BetService.prototype.placeBet = function (bet) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/bets/placeBet', bet, { headers: headers })
+        //return this.http.post('http://localhost:8080/bets/placeBet', bet, {headers: headers})
+        return this.http.post('bets/placeBet', bet, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.closeBet = function (betId, result) {
@@ -3043,7 +3049,8 @@ var BetService = (function () {
             status: result
         };
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/bets/closePending', bet, { headers: headers })
+        //return this.http.post('http://localhost:8080/bets/closePending', bet, {headers: headers})
+        return this.http.post('bets/closePending', bet, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.getBetsById = function (profileId, status) {
@@ -3052,7 +3059,8 @@ var BetService = (function () {
         var url = 'bets/getBets?userId=' + userId + '&status=' + status;
         var url2 = 'http://localhost:8080/bets/getBets?userId=' + userId + '&status=' + status;
         headers.append('Content-Type', 'application/json');
-        return this.http.get(url2, { headers: headers })
+        //return this.http.get(url2, {headers: headers})
+        return this.http.get(url, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.getBets = function (profile, status) {
@@ -3061,38 +3069,43 @@ var BetService = (function () {
         var url = 'bets/getBets?userId=' + userId + '&status=' + status;
         var url2 = 'http://localhost:8080/bets/getBets?userId=' + userId + '&status=' + status;
         headers.append('Content-Type', 'application/json');
-        return this.http.get(url2, { headers: headers })
+        //return this.http.get(url2, {headers: headers})
+        return this.http.get(url, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.getAllPendings = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/bets/getAllPendings', { headers: headers })
+        //return this.http.get('http://localhost:8080/bets/getAllPendings', {headers: headers})
+        return this.http.get('bets/getAllPendings', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.createCustom = function (bet) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/bets/createCustom', bet, { headers: headers })
+        //return this.http.post('http://localhost:8080/bets/createCustom', bet, {headers: headers})
+        return this.http.post('bets/createCustom', bet, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.getAllCustomBets = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/bets/allCustomBets', { headers: headers })
+        //return this.http.get('http://localhost:8080/bets/allCustomBets', {headers: headers})
+        return this.http.get('bets/allCustomBets', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.placePropBet = function (bet) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/bets/placePropBet', bet, { headers: headers })
+        //return this.http.post('http://localhost:8080/bets/placePropBet', bet, {headers: headers})
+        return this.http.post('bets/placePropBet', bet, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService.prototype.getPropBets = function (profile, status) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         var userId = profile.user._id;
-        var url = 'http://localhost:8080/bets/getPropBets?userId=' + userId + '&status=' + status;
-        //const url = 'bets/getPropBets?userId=' + userId + '&status=' + status;
+        //const url = 'http://localhost:8080/bets/getPropBets?userId=' + userId + '&status=' + status;
+        var url = 'bets/getPropBets?userId=' + userId + '&status=' + status;
         headers.append('Content-Type', 'application/json');
         return this.http.get(url, { headers: headers })
             .map(function (res) { return res.json(); });
@@ -3100,7 +3113,8 @@ var BetService = (function () {
     BetService.prototype.expireCustomBet = function (bet) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/bets/closeCustomBet', bet, { headers: headers })
+        //return this.http.post('http://localhost:8080/bets/closeCustomBet', bet, {headers: headers})
+        return this.http.post('bets/closeCustomBet', bet, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     BetService = __decorate([
@@ -3215,7 +3229,7 @@ module.exports = ".masthead {\n  position: relative;\n  width: 100%;\n  height: 
 /***/ 714:
 /***/ (function(module, exports) {
 
-module.exports = ".row{\n  margin-left: 0px;\n  margin-right: 0px;\n}\n\n.card-pricing.popular {\n    z-index: 1;\n    border: 3px solid #007bff;\n}\n.card-pricing .list-unstyled li {\n    padding: .5rem 0;\n    color: #6c757d;\n}\n\n.font-small{\n  font-size: 80%;\n}\n\n.btn {\n  font-size: 75%;\n}\n\ntd {\n  font-size: 60%;\n}\n\nth {\n  font-size: 80%;\n}\n\n.loader {\n    border: 16px solid #f3f3f3; /* Light grey */\n    border-top: 16px solid #3498db; /* Blue */\n    border-radius: 50%;\n    width: 120px;\n    height: 120px;\n    animation: spin 2s linear infinite;\n    margin-left:auto;\n    margin-right:auto;\n}\n\n@keyframes spin {\n    0% { transform: rotate(0deg); }\n    100% { transform: rotate(360deg); }\n}\n\n.topNav{\n  margin-top:5rem;\n}\n"
+module.exports = ".row{\n  margin-left: 0px;\n  margin-right: 0px;\n}\n\n.imageDivHeight {\n  height: 3rem;\n}\n\n.card-pricing.popular {\n    z-index: 1;\n    border: 3px solid #007bff;\n}\n.card-pricing .list-unstyled li {\n    padding: .5rem 0;\n    color: #6c757d;\n}\n\n.font-small{\n  font-size: 80%;\n}\n\n.btn {\n  font-size: 75%;\n}\n\ntd {\n  font-size: 60%;\n}\n\nth {\n  font-size: 80%;\n}\n\n.loader {\n    border: 16px solid #f3f3f3; /* Light grey */\n    border-top: 16px solid #3498db; /* Blue */\n    border-radius: 50%;\n    width: 120px;\n    height: 120px;\n    animation: spin 2s linear infinite;\n    margin-left:auto;\n    margin-right:auto;\n}\n\n@keyframes spin {\n    0% { transform: rotate(0deg); }\n    100% { transform: rotate(360deg); }\n}\n\n.topNav{\n  margin-top:5rem;\n}\n"
 
 /***/ }),
 
@@ -3341,7 +3355,7 @@ module.exports = "<header class=\"masthead\">\n\t<div class=\"container d-flex h
 /***/ 732:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"text-muted topNav\" *ngIf=\"actions.length < 1\" align=\"center\"><p>Loading Lines</p></div>\n<div class=\"loader\" *ngIf=\"actions.length < 1\"></div>\n\n<div class=\"container pt-5 bg-dark\" *ngIf=\"actions.length > 0\">\n  <div class=\"row\" align=\"center\" *ngIf=\"sport==0 || sport==3 || sport==4\">\n    <div *ngFor=\"let action of actions\" class=\"card col-sm-4 mt-3 pl-0 pr-0\">\n\n      <div class=\"row pl-0 pr-0\">\n        <div class=\"col w-50\" align=\"left\">\n          <p class=\"m-0 pl-3\">{{action.matchDate}}</p>\n        </div>\n        <div class=\"col w-50\" align=\"right\">\n          <p class=\"m-0 pr-3\">{{action.matchTime}}</p>\n        </div>\n      </div>\n\n      <div class =\"row w-100\" *ngIf=\"action.sport==0 || action.sport==4 || action.sport==3\">\n        <div class =\"col p-0 float-left\">\n          <img class=\"w-75 h-100\" src=\"{{action.awayImagePath}}\" alt=\"{{action.awayTeam}}\">\n        </div>\n        <h2 class=\"mt-4\">@</h2>\n        <div class =\"col p-0 float-right\">\n          <img class=\"w-75 h-100\" src=\"{{action.homeImagePath}}\" alt=\"assets/images/ncaaf.jpg\">\n        </div>\n      </div>\n\n      <div class=\"card-header border-top pl-3 pr-3\">\n\n        <div align=\"left\">\n          <div class=\"row pl-3\">{{action.awayTeam}}</div>\n          <div class=\"row border-bottom pb-1 pt-1\">\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-left\" *ngIf=\"action.awayTeamML!=0\" (click)=\"placeBet(action,'awayTeamML')\">{{action.awayTeamML}}</a>\n            </div>\n            <div class=\"col\" align=\"center\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light\" *ngIf=\"action.awayTeamRL!=0\" (click)=\"placeBet(action,'awayTeamRL')\">{{action.awayTeamRL}} {{action.awayTeamRLOdds}}</a>\n            </div>\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-right\" *ngIf=\"action.totalNumber!=0\" (click)=\"placeBet(action,'under')\">u{{action.totalNumber}}  {{action.underLine}}</a>\n            </div>\n          </div>\n        </div>\n\n        <div align=\"left\">\n          <div class=\"row pl-3\">{{action.homeTeam}}</div>\n          <div class=\"row pb-1 pt-1\">\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-left\" *ngIf=\"action.homeTeamML!=0\" (click)=\"placeBet(action,'homeTeamML')\">{{action.homeTeamML}}</a>\n            </div>\n            <div class=\"col\" align=\"center\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light\" *ngIf=\"action.homeTeamRL!=0\" (click)=\"placeBet(action,'homeTeamRL')\">{{action.homeTeamRL}} {{action.homeTeamRLOdds}}</a>\n            </div>\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-right\" *ngIf=\"action.totalNumber!=0\" (click)=\"placeBet(action,'over')\">o{{action.totalNumber}}  {{action.overLine}}</a>\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row mt-3 ml-0 mr-0\" *ngIf=\"sport==21\">\n    <div class=\"col bg-dark block text-light p-0 m-0 h-100\" *ngFor=\"let action of actions\">\n      <div class=\"col\" align=\"center\">\n        <h5>{{action.eventName}} - {{action.matchDate}} {{action.matchTime}}</h5>\n      </div>\n\n    <div>\n      <table class=\"table table-dark table-hover w-100\">\n        <thead>\n          <tr>\n            <th style=\"width:50%\">Participant</th>\n            <th style=\"width:50%\">Odds to Win</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr (click)=\"placeGolf(action, part)\" *ngFor=\"let part of action.participant\">\n            <td>{{part.name}}</td>\n            <td>{{part.odds}}</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n    </div>\n</div>\n\n\n<div class=\"row\" align=\"center\" *ngIf=\"sport==11\">\n  <div *ngFor=\"let action of actions\" class=\"card col-sm-4 mt-3 pl-0 pr-0\">\n\n    <div class=\"row pl-0 pr-0\">\n      <div class=\"col w-50\" align=\"left\">\n        <p class=\"m-0 pl-3\">{{action.matchDate}}</p>\n      </div>\n      <div class=\"col w-50\" align=\"right\">\n        <p class=\"m-0 pr-3\">{{action.matchTime}}</p>\n      </div>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"col\">\n        <div class=\"row justify-content-center mt-0 pt-0\">\n          <p class=\"font-weight-bold mb-0 pb-0\">{{action.homeTeam}} V {{action.awayTeam}}</p>\n        </div>\n        <div class=\"row justify-content-center mb-0 pb-0 text-muted font-small\">\n          {{action.details}}\n        </div>\n      </div>\n    </div>\n\n    <div class=\"card-header\">\n\n      <div class=\"row border-bottom\">\n        <div class=\"col w-50 border-right\" align=\"center\">\n          {{action.awayTeam}}\n        </div>\n        <div class=\"col w-50\" align=\"center\">\n          {{action.homeTeam}}\n        </div>\n      </div>\n\n      <div class=\"row border-bottom mb-1 pb-1 pt-1\" *ngIf=\"action.awayTeamML != null || action.homeTeamML != null\">\n        <div class=\"col w-50 border-right\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'awayTeamML')\" *ngIf=\"action.awayTeamML != null\">\n            {{action.awayTeamML}}\n          </a>\n        </div>\n        <div class=\"col w-50\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'homeTeamML')\" *ngIf=\"action.homeTeamML != null\">\n            {{action.homeTeamML}}\n          </a>\n        </div>\n      </div>\n\n      <div>\n      <div class=\"row border-bottom mb-1 pb-1 pt-1\" *ngIf=\"action.totalNumber != 0 || action.totalNumber !=0\">\n        <div class=\"col w-50 border-right\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'overUFC')\" *ngIf=\"action.totalNumber != 0\">\n            o{{action.totalNumber}}  {{action.overLine}}\n          </a>\n        </div>\n        <div class=\"col w-50\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'underUFC')\" *ngIf=\"action.totalNumber != 0\">\n            u{{action.totalNumber}}  {{action.underLine}}\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n\n  </div>\n</div>\n</div>\n"
+module.exports = "<div class=\"text-muted topNav\" *ngIf=\"actions.length < 1\" align=\"center\"><p>Loading Lines</p></div>\n<div class=\"loader\" *ngIf=\"actions.length < 1\"></div>\n\n<div class=\"container pt-5 bg-dark\" *ngIf=\"actions.length > 0\">\n  <div class=\"row\" align=\"center\" *ngIf=\"sport==0 || sport==3 || sport==4\">\n    <div *ngFor=\"let action of actions\" class=\"card col-sm-4 mt-3 pl-0 pr-0\">\n\n      <div class=\"row pl-0 pr-0\">\n        <div class=\"col w-50\" align=\"left\">\n          <p class=\"m-0 pl-3\">{{action.matchDate}}</p>\n        </div>\n        <div class=\"col w-50\" align=\"right\">\n          <p class=\"m-0 pr-3\">{{action.matchTime}}</p>\n        </div>\n      </div>\n\n      <div class =\"row w-100 imageDivHeight\" *ngIf=\"action.sport==0 || action.sport==4 || action.sport==3\">\n        <div class =\"col p-1 float-left\">\n          <img class=\"w-75 h-100\" src=\"{{action.awayImagePath}}\" alt=\"{{action.awayTeam}}\">\n        </div>\n        <h4 class=\"h-100\" align=\"center\">@</h4>\n        <div class =\"col p-1 float-right\">\n          <img class=\"w-75 h-100\" src=\"{{action.homeImagePath}}\" alt=\"assets/images/ncaaf.jpg\">\n        </div>\n      </div>\n\n      <div class=\"card-header border-top pl-3 pr-3\">\n\n        <div align=\"left\">\n          <div class=\"row pl-3\">{{action.awayTeam}}</div>\n          <div class=\"row border-bottom pb-1 pt-1\">\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-left\" *ngIf=\"action.awayTeamML!=0\" (click)=\"placeBet(action,'awayTeamML')\">{{action.awayTeamML}}</a>\n            </div>\n            <div class=\"col\" align=\"center\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light\" *ngIf=\"action.awayTeamRL!=0\" (click)=\"placeBet(action,'awayTeamRL')\">{{action.awayTeamRL}} {{action.awayTeamRLOdds}}</a>\n            </div>\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-right\" *ngIf=\"action.totalNumber!=0\" (click)=\"placeBet(action,'under')\">u{{action.totalNumber}}  {{action.underLine}}</a>\n            </div>\n          </div>\n        </div>\n\n        <div align=\"left\">\n          <div class=\"row pl-3\">{{action.homeTeam}}</div>\n          <div class=\"row pb-1 pt-1\">\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-left\" *ngIf=\"action.homeTeamML!=0\" (click)=\"placeBet(action,'homeTeamML')\">{{action.homeTeamML}}</a>\n            </div>\n            <div class=\"col\" align=\"center\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light\" *ngIf=\"action.homeTeamRL!=0\" (click)=\"placeBet(action,'homeTeamRL')\">{{action.homeTeamRL}} {{action.homeTeamRLOdds}}</a>\n            </div>\n            <div class=\"col\">\n              <a class=\"btn btn-primary btn-block btn-sm text-light float-right\" *ngIf=\"action.totalNumber!=0\" (click)=\"placeBet(action,'over')\">o{{action.totalNumber}}  {{action.overLine}}</a>\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row mt-3 ml-0 mr-0\" *ngIf=\"sport==21\">\n    <div class=\"col bg-dark block text-light p-0 m-0 h-100\" *ngFor=\"let action of actions\">\n      <div class=\"col\" align=\"center\">\n        <h5>{{action.eventName}} - {{action.matchDate}} {{action.matchTime}}</h5>\n      </div>\n\n    <div>\n      <table class=\"table table-dark table-hover w-100\">\n        <thead>\n          <tr>\n            <th style=\"width:50%\">Participant</th>\n            <th style=\"width:50%\">Odds to Win</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr (click)=\"placeGolf(action, part)\" *ngFor=\"let part of action.participant\">\n            <td>{{part.name}}</td>\n            <td>{{part.odds}}</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n    </div>\n</div>\n\n\n<div class=\"row\" align=\"center\" *ngIf=\"sport==11\">\n  <div *ngFor=\"let action of actions\" class=\"card col-sm-4 mt-3 pl-0 pr-0\">\n\n    <div class=\"row pl-0 pr-0\">\n      <div class=\"col w-50\" align=\"left\">\n        <p class=\"m-0 pl-3\">{{action.matchDate}}</p>\n      </div>\n      <div class=\"col w-50\" align=\"right\">\n        <p class=\"m-0 pr-3\">{{action.matchTime}}</p>\n      </div>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"col\">\n        <div class=\"row justify-content-center mt-0 pt-0\">\n          <p class=\"font-weight-bold mb-0 pb-0\">{{action.homeTeam}} V {{action.awayTeam}}</p>\n        </div>\n        <div class=\"row justify-content-center mb-0 pb-0 text-muted font-small\">\n          {{action.details}}\n        </div>\n      </div>\n    </div>\n\n    <div class=\"card-header\">\n\n      <div class=\"row border-bottom\">\n        <div class=\"col w-50 border-right\" align=\"center\">\n          {{action.awayTeam}}\n        </div>\n        <div class=\"col w-50\" align=\"center\">\n          {{action.homeTeam}}\n        </div>\n      </div>\n\n      <div class=\"row border-bottom mb-1 pb-1 pt-1\" *ngIf=\"action.awayTeamML != null || action.homeTeamML != null\">\n        <div class=\"col w-50 border-right\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'awayTeamML')\" *ngIf=\"action.awayTeamML != null\">\n            {{action.awayTeamML}}\n          </a>\n        </div>\n        <div class=\"col w-50\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'homeTeamML')\" *ngIf=\"action.homeTeamML != null\">\n            {{action.homeTeamML}}\n          </a>\n        </div>\n      </div>\n\n      <div>\n      <div class=\"row border-bottom mb-1 pb-1 pt-1\" *ngIf=\"action.totalNumber != 0 || action.totalNumber !=0\">\n        <div class=\"col w-50 border-right\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'overUFC')\" *ngIf=\"action.totalNumber != 0\">\n            o{{action.totalNumber}}  {{action.overLine}}\n          </a>\n        </div>\n        <div class=\"col w-50\">\n          <a class=\"btn btn-block btn-primary btn-sm text-light\" (click)=\"placeBet(action, 'underUFC')\" *ngIf=\"action.totalNumber != 0\">\n            u{{action.totalNumber}}  {{action.underLine}}\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n\n  </div>\n</div>\n</div>\n"
 
 /***/ }),
 
