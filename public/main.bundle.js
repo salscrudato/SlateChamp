@@ -56,7 +56,8 @@ var LeagueService = (function () {
         };
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/league/addParticipant', body, { headers: headers })
+        //return this.http.post('http://localhost:8080/league/addParticipant', body, {headers: headers})
+        return this.http.post('league/addParticipant', body, { headers: headers })
             .map(function (res) { return res.json(); })
             .toPromise();
     };
