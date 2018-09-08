@@ -117,7 +117,8 @@ export class TeaserComponent implements OnInit {
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport){
           var tmpGameDate = new Date(data[i].epoch).getDate();
-          if(tmpGameDate == 1){
+          //Eventually replace this with 
+          if(tmpGameDate == 9){
           tempArr.push(data[i]);
           tempArr = this.dataService.sortBets(tempArr);
           this.setUpActions(tempArr, this.sport);

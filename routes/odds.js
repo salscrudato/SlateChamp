@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 const apicache = require('apicache');
-const cache = apicache.middleware;
-//let cache = apicache.middleware;
+let cache = apicache.middleware;
 const JsonOdds = require('../classes/JsonOdds.js');
 
 
@@ -11,9 +10,7 @@ const JsonOdds = require('../classes/JsonOdds.js');
 //This was done because only a limited number of calls can be made per month, and caching is added to reduce the overall number of hits
 //The body returns several nodes, with each node corresponding to one game
 //Each game is made into a JsonOdds object to ensure the responses to the front end are uniform
-
 router.get('/all', cache('20 minutes'), function(req, res, next){
-//router.get('/all', function(req, res, next){
   const headers = {
     'x-api-key': process.env.JSON_API_KEY || 'c3eeb8e5-339c-4c38-9cf5-9aa6255969e5'
   }

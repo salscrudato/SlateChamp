@@ -31,10 +31,12 @@ export class LeaderboardComponent implements OnInit {
   getAllLeagues(){
     this.leagueService.getAllLeagues().subscribe(leagues => {
       for(var i = 0; i < leagues.length; i++){
+        if(leagues[i].status == 'open'){
         this.leagues.push(leagues[i]);
         for (var j = 0; j < leagues[i].participants.length; j++){
           this.playerIds.push(leagues[i].participants[j]._id);
         }
+      }
       }
       this.getAllPlayers(this.playerIds);
     });
@@ -44,6 +46,7 @@ export class LeaderboardComponent implements OnInit {
     for(var i = 0; i < players.length; i++){
       this.userService.getProfileById(players[i]).then(
         (player) => {
+          console.log(player);
           this.players.push(player);
           this.leagues[0].participants = this.sortPlayers(this.players);
         }
@@ -54,8 +57,8 @@ export class LeaderboardComponent implements OnInit {
   getPlayerBets(playerId){
 
     var curTime = new Date;
-    var tmpEndDate = new Date('9/1/2018');
-    var endDate = new Date(tmpEndDate.getTime() + (12*60*60*1000));
+    var tmpEndDate = new Date('9/9/2018');
+    var endDate = new Date(tmpEndDate.getTime() + (13*60*60*1000));
     console.log(curTime);
     console.log(endDate);
 

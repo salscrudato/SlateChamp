@@ -10,7 +10,7 @@
 
       <div class="row mt-2">
       <div class="col border-bottom" align="center">
-        <p>Message from Sal: Thanks for joining the first contest.  Please remember all bets are due in before the first game on Saturday at noon.  Since this is the first contest, I'd really like to get as much feedback as possible so we can improve the user experience.  Please feel free to send along all of your feedback.</p>
+        <p>Message from SlateChamps - Thanks again for being a test user, please pass along all feedback.  Good luck and congrats again to the week 1 winner, Frankie!</p>
       </div>
     </div>
 
@@ -19,19 +19,20 @@
           <p>Current League:  {{user.league[0].name}}</p>
         </div>
         <div class="col border-bottom" align="center" *ngIf="user.league.length < 1">
-          <p>Current League:  Not Entered</p>
+          <p>Current League:  Not Entered (Navigate to the 'Join a League' to enter)</p>
         </div>
       </div>
 
       <div class="row mt-2">
         <div class="col border-bottom" align="center">
-          <p>Point Balance:  {{user.currentBalance}}</p>
+          <p>Point Balance:  {{user.currentBalance + 500}}</p>
         </div>
       </div>
 
       <div class="row mt-2">
         <div class="col border-bottom" align="center">
           <p>Available Points:  {{user.credit + user.currentBalance - amountPending}}</p>
+          <p *ngIf="(user.credit + user.currentBalance - amountPending) > 0">Navigate to the 'Bet Menu' to use your points</p>
         </div>
       </div>
     </div>

@@ -14,14 +14,14 @@
             <thead>
               <tr>
                 <th style="width:75%">Username</th>
-                <th style="width:25%">Current Balance</th>
+                <th style="width:25%">Points</th>
                 <!-- <th style="width:25%">Prize</th> -->
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let part of league.participants" (click)="getPlayerBets(part._id)" data-toggle="modal" data-target="#exampleModal">
                 <td>{{part.name}} - Click to view bets</td>
-                <td>{{part.currentBalance}}</td>
+                <td>{{part.currentBalance + 500}}pts</td>
               </tr>
             </tbody>
           </table>

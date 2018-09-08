@@ -5,7 +5,7 @@
   <div class="row" align="center" *ngIf="sport==0 || sport==3 || sport==4">
     <div *ngFor="let action of actions" class="card col-sm-4 mt-3 pl-0 pr-0">
 
-      <div class="row pl-0 pr-0">
+      <div class="row pl-0 pr-0 text-muted">
         <div class="col w-50" align="left">
           <p class="m-0 pl-3">{{action.matchDate}}</p>
         </div>
@@ -16,11 +16,11 @@
 
       <div class ="row w-100 imageDivHeight" *ngIf="action.sport==0 || action.sport==4 || action.sport==3">
         <div class ="col p-1 float-left">
-          <img class="w-75 h-100" src="{{action.awayImagePath}}" alt="{{action.awayTeam}}">
+          <img class="w-100 h-100" src="{{action.awayImagePath}}" alt="{{action.awayTeam}}">
         </div>
         <h4 class="h-100" align="center">@</h4>
         <div class ="col p-1 float-right">
-          <img class="w-75 h-100" src="{{action.homeImagePath}}" alt="assets/images/ncaaf.jpg">
+          <img class="w-100 h-100" src="{{action.homeImagePath}}" alt="assets/images/NFL/nfl.svg">
         </div>
       </div>
 

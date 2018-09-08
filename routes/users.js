@@ -28,11 +28,13 @@ router.post('/updateBalance', function(req, res, next){
 	const userId = req.body.userId;
 	const amount = req.body.amount;
 	User.getUserById(userId, function(err, user){
-		const curBal = user.currentBalance;
-		const newBal = curBal + amount;
-		User.updateBalance(userId, newBal, function(err, user){
-			res.json({success: true, msg: 'Balance Updated'});
-		});
+		if(user != null && user.currentBalance != null){
+			const curBal = user.currentBalance;
+			const newBal = curBal + amount;
+			User.updateBalance(userId, newBal, function(err, user){
+				res.json({success: true, msg: 'Balance Updated'});
+			});
+		}
 	});
 });
 
@@ -93,12 +95,12 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), function(r
 
 router.get('/allProfiles', function(req, res){
 	User.find(function(err, user) {
-    	var userMap = [];
-    	user.forEach(function(oneUser) {
-      		userMap.push(oneUser);
-    	});
-    	res.send(userMap);
-  });
+		var userMap = [];
+		user.forEach(function(oneUser) {
+			userMap.push(oneUser);
+		});
+		res.send(userMap);
+	});
 });
 
 router.get('/getProfileById', function(req, res){

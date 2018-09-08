@@ -11,31 +11,24 @@ const config = require('../config/database');
 //A credit that all users will have
 //===== Can we think of anything else? =====
 const LeagueSchema = mongoose.Schema({
-  description:{
-    type: String,
-    required: true,
-    default: 'test'
-  },
-  sport: {
-    type: Number,
-    required: true
-  },
-  startTime: {
-    type: Date
-  },
-  endTime: {
-    type: Date
+  name: {
+    type: String
   },
   buyin: {
-    type: Number,
-    required: true
+    type: String
+  },
+  status: {
+    type: String
+  },
+  date: {
+    type: Date
+  },
+  sport: {
+    type: Number
   },
   participants: {
     type: Array,
     default: []
-  },
-  status: {
-    type: String
   }
 });
 

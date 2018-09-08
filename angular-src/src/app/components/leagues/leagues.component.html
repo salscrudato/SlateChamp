@@ -9,10 +9,10 @@
   <div class="row">
 
     <div class="card col-sm-4 pl-0 pr-0">
-      <img class="card-img-top" src="/assets/images/ncaaf.jpg" alt="College Football">
+      <img class="card-img-top w-100 leagueHeight" src="/assets/images/NFL/nfl.svg" alt="National Football League">
       <div class="card-header">
         <div class="row">
-          <div class="col mb-1" align="center" *ngFor="let league of cfbLeagues">
+          <div class="col mb-1" align="center" *ngFor="let league of nflLeagues">
             <a class="btn btn-secondary btn-block text-light fontSmall" (click)="joinLeague(league)">${{league.buyin}} {{league.name}}</a>
           </div>
         </div>

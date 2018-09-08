@@ -41,7 +41,7 @@ export class StraightComponent implements OnInit {
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport){
           var tmpGameDate = new Date(data[i].epoch).getDate();
-          if(tmpGameDate == 1){
+          if(tmpGameDate == 9){
           this.actions.push(data[i]);
           this.actions = this.sortEventOdds(this.actions);
         }

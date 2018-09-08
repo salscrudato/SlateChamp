@@ -25,10 +25,11 @@ class JsonOdds {
         if(oddsArr[i].OddType=='Game'){
           this.homeTeamML = JsonOdds.formatOdds(oddsArr[i].MoneyLineHome);
           this.awayTeamML = JsonOdds.formatOdds(oddsArr[i].MoneyLineAway);
-          this.homeTeamSpread = JsonOdds.formatOdds(oddsArr[i].PointSpreadHome);
-          this.homeTeamSpreadOdds = JsonOdds.formatOdds(oddsArr[i].PointSpreadHomeLine);
-          this.awayTeamSpread = JsonOdds.formatOdds(oddsArr[i].PointSpreadAway);
-          this.awayTeamSpreadOdds = JsonOdds.formatOdds(oddsArr[i].PointSpreadAwayLine);
+          //!!!!!!!!!!TODO - Replace RL with Spread which will require updates throughout the application
+          this.homeTeamRL = JsonOdds.formatOdds(oddsArr[i].PointSpreadHome);
+          this.homeTeamRLOdds = JsonOdds.formatOdds(oddsArr[i].PointSpreadHomeLine);
+          this.awayTeamRL = JsonOdds.formatOdds(oddsArr[i].PointSpreadAway);
+          this.awayTeamRLOdds = JsonOdds.formatOdds(oddsArr[i].PointSpreadAwayLine);
           this.totalNumber = oddsArr[i].TotalNumber;
           this.overLine = JsonOdds.formatOdds(oddsArr[i].OverLine);
           this.underLine = JsonOdds.formatOdds(oddsArr[i].UnderLine);
@@ -162,7 +163,7 @@ class JsonOdds {
         case 'newenglandpatriots':
         return '/assets/images/NFL/patriots.svg';
         break;
-        case 'miamiDolphins':
+        case 'miamidolphins':
         return '/assets/images/NFL/dolphins.svg';
         break;
         case 'tennesseetitans':

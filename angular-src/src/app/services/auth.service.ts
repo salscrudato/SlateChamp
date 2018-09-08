@@ -20,8 +20,8 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
       const url = this.urlPrefix + 'users/register';
-      return this.http.post('http://localhost:8080/users/register', user, {headers: headers})
-      //return this.http.post(url, user, {headers: headers})
+      //return this.http.post('http://localhost:8080/users/register', user, {headers: headers})
+      return this.http.post(url, user, {headers: headers})
         .map(res => res.json());
   }
 

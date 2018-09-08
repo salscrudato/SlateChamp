@@ -178,8 +178,8 @@ placeLiveBet(){
 }
 
 clickPlaceBet(){
-  var tmpEndDate = new Date('9/1/2018');
-  var endDate = new Date(tmpEndDate.getTime() + (12*60*60*1000));
+  var tmpEndDate = new Date('9/9/2018');
+  var endDate = new Date(tmpEndDate.getTime() + (13*60*60*1000));
   var curDate = new Date();
   console.log(endDate);
   console.log(curDate);

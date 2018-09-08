@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
-//===== User Model =====
-//
+//==========User Model=========
+//A User should have a: firstName, lastName, email, nickname, password, playerPoints, league
+//A league should have a league ID and name
 const UserSchema = mongoose.Schema({
 	name: {
 		type: String

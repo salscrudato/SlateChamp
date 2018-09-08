@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 export class LeaguesComponent implements OnInit {
 
   cfbLeagues:any = [];
+  nflLeagues:any = [];
   user:any = null;
 
   constructor(
@@ -25,14 +26,14 @@ export class LeaguesComponent implements OnInit {
 
   ngOnInit() {
     this.getProfile();
-    this.getAllLeagues();
+    this.getNflLeagues();
   }
 
-  getAllLeagues(){
+  getNflLeagues(){
     this.leagueService.getAllLeagues().subscribe(leagues => {
       for(var i = 0; i < leagues.length; i++){
-        if(leagues[i].status != 'closed' && leagues[i].sport==3){
-          this.cfbLeagues.push(leagues[i]);
+        if(leagues[i].status != 'closed' && leagues[i].sport==4){
+          this.nflLeagues.push(leagues[i]);
         }
       }
     });

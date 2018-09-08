@@ -93,7 +93,7 @@ export class ParlayComponent implements OnInit {
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport && tempArrId.indexOf(data[i].id) < 0){
           var tmpGameDate = new Date(data[i].epoch).getDate();
-          if(tmpGameDate == 1){
+          if(tmpGameDate == 9){
           tempArrId.push(data[i].id);
           tempArr.push(data[i]);
           tempArr = this.dataService.sortBets(tempArr);
