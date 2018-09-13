@@ -41,11 +41,12 @@ export class StraightComponent implements OnInit {
       for (var i = 0; i < data.length; i++) {
         if(data[i].sport == this.sport){
           var tmpGameDate = new Date(data[i].epoch).getDate();
-          if(tmpGameDate == 9){
+          //Add logic to get league date here and only add games that occur on that date
+          // if(tmpGameDate == 9){
           this.actions.push(data[i]);
           this.actions = this.sortEventOdds(this.actions);
         }
-        }
+        // }
       }
     });
   }

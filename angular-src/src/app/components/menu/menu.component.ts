@@ -93,11 +93,9 @@ export class MenuComponent implements OnInit {
     this.oddsService.getOdds().subscribe(data =>{
       for (var i = 0; i < data.length; i++) {
           var tmpDate = new Date(data[i].humanDate).getDate();
-          if(tmpDate == 9){
           this.actions.push(data[i]);
           this.actions = this.sortEventOdds(this.actions);
         }
-      }
     });
   }
 
