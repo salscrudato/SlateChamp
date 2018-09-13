@@ -3,6 +3,9 @@ const router = express.Router();
 const League = require('../models/league');
 const config = require('../config/database');
 
+//This method creates a league
+//We need to determine what attributes a league needs
+//This was a last minute league setup, there's definitely a better way to handle leagues and users
 router.post('/create', function(req, res, next){
 	let newLeague = new League({
 		name: req.body.name,
@@ -18,6 +21,7 @@ router.post('/create', function(req, res, next){
 	});
 });
 
+//Closes a league(for entry)
 router.post('/close', function(req, res, next){
 		League.closeLeague(req.body._id, function(err, league){
 			if(err){
@@ -28,6 +32,7 @@ router.post('/close', function(req, res, next){
 		});
 });
 
+//Gets all leagues and shows them to the users on the league component
 router.get('/getAll', function(req, res){
 	League.find(function(err, league) {
     	var leagueArray = [];
@@ -38,6 +43,8 @@ router.get('/getAll', function(req, res){
   });
 });
 
+
+//This method adds a player to a league
 router.post('/addParticipant', function(req, res, next){
 		League.addParticipant(req.body.id, req.body.user, function(err, league){
 			if(err){

@@ -6,29 +6,9 @@ const PropBet = require('../models/propBet');
 const config = require('../config/database');
 const request = require('request');
 
-var getAllOddsIds = function(callback){
-	var headers = {
-		'x-api-key':'c3eeb8e5-339c-4c38-9cf5-9aa6255969e5'
-	}
-	var tempActionIds = [];
-	var options = {
-		url: 'https://jsonodds.com/api/odds',
-		method: 'GET',
-		headers: headers
-	}
-	request(options, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var data = JSON.parse(body);
-			for(var i = 0; i < data.length; i++){
-				tempActionIds.push(data[i].ID);
-			}
-			callback(tempActionIds);
-		} else {
-			callback({success: false});
-		}
-	});
-}
 
+//This method is kind of self explanatory
+//It takes a bet object (see below) and saves it to the database
 router.post('/placeBet', function(req, res, next){
 
 	let bet = new Bet({
@@ -81,7 +61,9 @@ router.post('/placeBet', function(req, res, next){
 	}
 });
 
-
+//This method lets us get bets by user
+//This is used when a player is on their profile page to see all their bets
+//It's also used when on the leaderboard and a player wants to see what another player bet
 router.get('/getBets', function(req, res, next){
 	const userId = req.query.userId;
 	const status = req.query.status;
@@ -103,6 +85,7 @@ router.get('/getBets', function(req, res, next){
 	});
 });
 
+//This method lets us close a bet (win, loss, draw) if the batch job can't close it automatically
 router.post('/closePending', function(req, res, next){
 	const betId = req.body.betId;
 	const status = req.body.status;
@@ -115,6 +98,8 @@ router.post('/closePending', function(req, res, next){
 	});
 });
 
+//This method gets all pending bets
+//This is useful for us, as admins, to see what's open and hasn't been settled
 router.get('/getAllPendings', function(req, res, next){
 	var query = {status: 'open'};
 	Bet.find(query, function(err, bet) {
@@ -130,6 +115,7 @@ router.get('/getAllPendings', function(req, res, next){
 	});
 });
 
+//Disregard - this was for original idea
 router.post('/createCustom', function(req, res, next){
 	let newBet = new CustomBet({
 		source: 'custom',
@@ -149,6 +135,7 @@ router.post('/createCustom', function(req, res, next){
 	});
 });
 
+//Disregard - this was for original idea
 router.get('/allCustomBets', function(req, res){
 	CustomBet.find(function(err, bet) {
 		var betMap = [];
@@ -159,9 +146,8 @@ router.get('/allCustomBets', function(req, res){
 	});
 });
 
-
+//Disregard - this was for original idea
 router.post('/placePropBet', function(req, res, next){
-
 	let propBet = new PropBet({
 		userId: req.body.userId,
 		username: req.body.username,
@@ -181,6 +167,7 @@ router.post('/placePropBet', function(req, res, next){
 		});
 });
 
+//Disregard - this was for original idea
 router.get('/getPropBets', function(req, res, next){
 	const userId = req.query.userId;
 	const status = req.query.status;
@@ -202,6 +189,7 @@ router.get('/getPropBets', function(req, res, next){
 	});
 });
 
+//Disregard - this was for original idea
 router.post('/closeCustomBet', function(req, res, next){
 		CustomBet.expireBet(req.body._id, function(err, placedBet){
 			if(err){
@@ -211,5 +199,29 @@ router.post('/closeCustomBet', function(req, res, next){
 			}
 		});
 });
+
+//Honestly not entirely sure what this is
+var getAllOddsIds = function(callback){
+	var headers = {
+		'x-api-key':'c3eeb8e5-339c-4c38-9cf5-9aa6255969e5'
+	}
+	var tempActionIds = [];
+	var options = {
+		url: 'https://jsonodds.com/api/odds',
+		method: 'GET',
+		headers: headers
+	}
+	request(options, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var data = JSON.parse(body);
+			for(var i = 0; i < data.length; i++){
+				tempActionIds.push(data[i].ID);
+			}
+			callback(tempActionIds);
+		} else {
+			callback({success: false});
+		}
+	});
+}
 
 module.exports = router;
