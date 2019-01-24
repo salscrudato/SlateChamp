@@ -50,9 +50,9 @@ app.use('/odds', odds);
 app.use('/bets', bets);
 app.use('/league', league);
 
-// app.get('/', function(req, res){
-// 	res.send('invalid endpoints');
-// });
+app.get('/', function(req, res){
+	res.send('invalid endpoints');
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
